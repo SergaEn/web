@@ -193,7 +193,59 @@ class AccountCommandLineRunner implements CommandLineRunner{
                 550.0);
         phoneRepository.save(phone);
 
+        images = Arrays.asList("img/phones/motorola-atrix-4g.0.jpg",
+                "img/phones/motorola-atrix-4g.1.jpg",
+                "img/phones/motorola-atrix-4g.2.jpg",
+                "img/phones/motorola-atrix-4g.3.jpg");
 
+        phone = new Phone( "MOTOROLA ATRIX\u2122 4G",15, images,
+                "MOTOROLA ATRIX 4G gives you dual-core processing power and the revolutionary webtop application",
+                220.0);
+        phoneRepository.save(phone);
+
+        images = Arrays.asList("img/phones/motorola-bravo-with-motoblur.0.jpg",
+                "img/phones/motorola-bravo-with-motoblur.1.jpg",
+                "img/phones/motorola-bravo-with-motoblur.2.jpg");
+
+        phone = new Phone("MOTOROLA BRAVO\u2122 with MOTOBLUR\u2122",55, images,
+                "MOTOROLA BRAVO\u2122 with MOTOBLUR\u2122 with its large 3.7-inch touchscreen and web-browsing capabilities is sure to make an impression.",
+                1254.0);
+        phoneRepository.save(phone);
+
+        images = Arrays.asList("img/phones/motorola-xoom.0.jpg",
+                "img/phones/motorola-xoom.1.jpg",
+                "img/phones/motorola-xoom.2.jpg");
+
+        phone = new Phone("MOTOROLA XOOM\u2122",10, images,
+                "MOTOROLA XOOM has a super-powerful dual-core processor and Android\u2122 3.0 (Honeycomb)",
+                155.0);
+        phoneRepository.save(phone);
+
+        images = Arrays.asList("img/phones/samsung-galaxy-tab.0.jpg",
+                "img/phones/samsung-galaxy-tab.1.jpg",
+                "img/phones/samsung-galaxy-tab.2.jpg",
+                "img/phones/samsung-galaxy-tab.3.jpg",
+                "img/phones/samsung-galaxy-tab.4.jpg",
+                "img/phones/samsung-galaxy-tab.5.jpg",
+                "img/phones/samsung-galaxy-tab.6.jpg");
+
+        phone = new Phone("Samsung Galaxy Tab\u2122",10, images,
+                "Feel Free to Tab\u2122. The Samsung Galaxy Tab\u2122, the tablet device that delivers enhanced capabilities with advanced mobility",
+                1550.0);
+        phoneRepository.save(phone);
+
+        images = Arrays.asList("img/phones/samsung-galaxy-tab.0.jpg",
+                "img/phones/samsung-galaxy-tab.1.jpg",
+                "img/phones/samsung-galaxy-tab.2.jpg",
+                "img/phones/samsung-galaxy-tab.3.jpg",
+                "img/phones/samsung-galaxy-tab.4.jpg",
+                "img/phones/samsung-galaxy-tab.5.jpg",
+                "img/phones/samsung-galaxy-tab.6.jpg");
+
+        phone = new Phone("SANYO ZIO",10, images,
+                "Zio uses CDMA2000 1xEV-DO rev. A and Wi-Fi technologies and features a 3.5-inch WVGA touch-screen display as a backdrop",
+                951.0);
+        phoneRepository.save(phone);
 
 
 /*//		ArrayList list = (ArrayList) Arrays.asList("jhoeller,dsyer,pwebb,ogierke,rwinch,mfisher,mpollack,jlong".split(","));

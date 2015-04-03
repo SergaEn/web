@@ -33,15 +33,22 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <ul class="nav navbar-nav">
-            <li role="presentation" class="active"><a data-ng-href="#/phones">Главная</a></li>
+            <li class="bottom-right"><a data-ng-href="#/phones">Главная</a></li>
             <form class="navbar-form navbar-left" role="search">
+
                 <input ng-model="query" class="form-control" placeholder="Найти...">
             </form>
         </ul>
-      <!--  <ul class="nav navbar-nav navbar-right">
-            <li role="presentation" class="active"><a href="#">Вход</a></li>
-            <li role="presentation"><a href="#">Корзина</a></li>
-        </ul>-->
+       <ul class="nav navbar-nav navbar-right" ng-controller="authorization">
+           <form class="navbar-form navbar-left" ng-controller="registration">
+               <p class="text-danger"><span style="color: #eea236" ng-bind="username"></span></p>
+               <div ng-show="authorization" >
+            <button type="button" class="btn btn-default bg-info" data-ng-click="login();">Вход</button>
+           <button type="button" class="btn btn-primary bg-success" data-ng-click="register();">Регистрация</button>
+               </div>
+           </form>
+
+         </ul>
     </div>
 </nav>
 

@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-var phonecatControllers = angular.module('phonecatControllers', []);
+var phonecatControllers = angular.module('phonecatControllers', [])
 
 phonecatControllers.controller('PhoneListCtrl', function ($scope, $http, $modal) {
     $http.get('http://localhost:8080/api/phones').success(function (data) {
@@ -248,6 +248,142 @@ phonecatControllers.controller('AddNewCtrl', function ($scope, $modalInstance, $
                 $scope.badRequest = 'Карта не найдена!';
             else if (status === 422)
                 $scope.badRequest = 'Недостаточно средств на карте!';
+
+
+        });
+    };
+});
+
+
+phonecatControllers.controller('authorization', function ($scope, $http, $modal) {
+    $scope.authorization = true;
+    $scope.username = 'Супер магазин по продаже телефонов!!';
+    $scope.login = function () {
+
+        var modalInstance = $modal.open({
+            templateUrl: '/partials/login.html',
+            controller: 'loginCtrl',
+            scope: $scope
+
+        });
+
+        modalInstance.result.then(
+            function (account) {
+               $scope.username = 'Добро пожаловать в наш магазин: '+account.username;
+                console.log($scope.username)
+                $scope.authorization = !$scope.authorization;
+
+            },
+            function () {
+            }
+        );
+
+    };
+
+
+
+});
+
+phonecatControllers.controller('loginCtrl', function ($scope, $modalInstance, $http, $window) {
+
+    $scope.account = {
+        username: null,
+        password: null
+    };
+
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+
+    $scope.submit = function () {
+        $scope.submitting = true;
+        $http({
+            method: 'POST',
+            url: 'http://localhost:8080/api/accout/',
+            data: $scope.account
+        }).success(function (data) {
+            $scope.submitting = false;
+            $window.alert("Авторизация успешно завершина!");
+            $modalInstance.close(data);
+        }).error(function (data, status) {
+            $scope.submitting = false;
+            if (status === 400)
+                $scope.badRequest = data;
+            else if (status === 409)
+                $scope.badRequest = 'Пользователь не найден!';
+            else if (status === 422)
+                $scope.badRequest = 'Неверный пароль!';
+
+
+        });
+    };
+});
+
+
+phonecatControllers.controller('registration', function ($scope, $http, $modal) {
+    $scope.authorization = true;
+    $scope.username = 'Супер магазин по продаже телефонов!!';
+    $scope.register = function () {
+        var modalInstance = $modal.open({
+            templateUrl: '/partials/register.html',
+            controller: 'registerCtrl',
+            scope: $scope
+
+        });
+
+        modalInstance.result.then(
+            function (account) {
+                $scope.username = 'Добро пожаловать в наш магазин: '+account.username;
+                console.log($scope.username)
+                $scope.authorization = !$scope.authorization;
+            },
+            function () {
+            }
+        );
+
+    };
+
+
+
+});
+
+phonecatControllers.controller('registerCtrl', function ($scope, $modalInstance, $http, $window) {
+
+    $scope.account = {
+        username: null,
+        password: null
+    };
+
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+
+    $scope.submit = function () {
+        $scope.submitting = true;
+        $http({
+            method: 'POST',
+            url: 'http://localhost:8080/api/register/',
+            data: $scope.account
+        }).success(function (data) {
+            $scope.submitting = false;
+            $window.alert("Регистрация успешно завершина!");
+            /* */
+            /*   console.log(data.count);
+             console.log( phone.count);
+             console.log($scope.phone.count);*/
+            /*
+             phone.count = data.count;*/
+            $modalInstance.close(data);
+        }).error(function (data, status) {
+            $scope.submitting = false;
+            if (status === 400)
+                $scope.badRequest = data;
+            else if (status === 409)
+                $scope.badRequest = 'Такое имя уже занято!';
+            else if (status === 422)
+                $scope.badRequest = 'Слишком мало символов....';
 
 
         });

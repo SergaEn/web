@@ -33,7 +33,7 @@ public class PhoneController {
 
     @RequestMapping(value = "/api/phones",  method = GET)
     /*@PreAuthorize("isAuthenticated()")*/
-    List<Phone>  getAccount(){
+    List<Phone>  getPhones(){
         List<Phone> phone = phoneRepository.findAll();
         return phone;
     }

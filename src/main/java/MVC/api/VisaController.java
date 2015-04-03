@@ -42,7 +42,7 @@ public class VisaController {
     @Autowired private PhoneRepository phoneRepository;
 
     @RequestMapping(value = "/api/payToVisa/{id:\\d+}", method = POST)
-   /* @PreAuthorize("isAuthenticated()")*/
+   @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Phone> buyVisa(final @PathVariable Integer id, final @RequestBody Visa buyVisa, final BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             throw new IllegalArgumentException("Invalid arguments.");

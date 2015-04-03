@@ -15,7 +15,9 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
                 "/phones",
                 "/phones/{id:\\w+}",
                 "/singIn",
-                "/cart"
+                "/cart",
+                "/login",
+                "/register"
         })
         public String index() {
             return "forward:index.html";

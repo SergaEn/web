@@ -22,7 +22,7 @@ public class Account implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
    //@JsonIgnore
-    @Column(name = "password", unique = true, length = 30, nullable = false)
+    @Column(name = "password", length = 30, nullable = false)
     @NotNull
     private String password;
 
