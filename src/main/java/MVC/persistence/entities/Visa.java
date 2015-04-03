@@ -36,7 +36,7 @@ public class Visa implements Serializable {
 
     private Integer cvv;
 
-
+    @Temporal(TemporalType.DATE)
     private Calendar expirationDate;
     private Double summ;
 

@@ -86,7 +86,7 @@ public class Phone implements Serializable {
     }
 
     public void setCount(Integer count) {
-
+     if (this.count.equals(0)) this.count = 10;
         this.count =  this.count - count;
     }
 

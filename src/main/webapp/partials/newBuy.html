@@ -12,22 +12,22 @@
 	    </div>
 	</div>
 	<div class="form-group" data-ng-class="{'has-error': theForm.inputName.$invalid,'has-success': theForm.inputName.$valid}">
-	    <label for="inputName" class="col-sm-2 control-label">firstName</label>
+	    <label for="inputName" class="col-sm-2 control-label">FirstName</label>
 	    <div class="col-sm-10">
-		<input id="inputName" name="inputName" type="text" class="form-control" data-ng-model="visa.firstName" data-ng-required="true"/>
+		<input id="inputName" name="inputName" type="text" class="form-control" data-ng-model="visa.firstName" data-ng-required="true" placeholder="Имя" size="20"/>
 	    </div>
 	</div>
         <div class="form-group" data-ng-class="{'has-error': theForm.lastName.$invalid,'has-success': theForm.lastName.$valid}">
-            <label for="lastName" class="col-sm-2 control-label">lastName</label>
+            <label for="lastName" class="col-sm-2 control-label">LastName</label>
             <div class="col-sm-10">
-                <input id="lastName" name="lastName" type="text" class="form-control" data-ng-model="visa.lastName" data-ng-required="true"/>
+                <input id="lastName" name="lastName" type="text" class="form-control" data-ng-model="visa.lastName" data-ng-required="true"  placeholder="Фамилия" size="20"/>
             </div>
         </div>
 
         <div class="form-group" data-ng-class="{'has-error': theForm.cartName.$invalid,'has-success': theForm.cartName.$valid}">
-            <label for="cartName" class="col-sm-2 control-label">cartName</label>
+            <label for="cartName" class="col-sm-2 control-label">Cart</label>
             <div class="col-sm-10">
-                <input id="cartName" name="cartName" type="text" class="form-control" data-ng-model="visa.cartName" data-ng-required="true"/>
+                <input id="cartName" name="cartName" type="text" class="form-control" data-ng-model="visa.cartName" data-ng-required="true" placeholder="Тип карты" size="20"/>
             </div>
         </div>
 
@@ -37,7 +37,7 @@
 		<div class="input-group datepicker-popup">
 		    <input id="expirationDate" name="expirationDate" type="text" class="form-control" datepicker-popup="yyyy-MM-dd"
                    data-ng-model="visa.expirationDate" data-is-open="boughtOnOptions.open" data-show-weeks="false" data-show-button-bar="false"
-                   data-min="boughtOnOptions.minimum" data-ng-required="true" />
+                   data-min="boughtOnOptions.minimum" data-ng-required="true" placeholder="Срок действия" size="20"/>
 		    <span class="input-group-btn">
 			<button class="btn btn-default" data-ng-click="openBoughtOn($event);" type="button"><span class="glyphicon glyphicon-calendar"></span>&#xFEFF;</button>
 		    </span>
@@ -47,20 +47,24 @@
         <div class="form-group" data-ng-class="{'has-error': theForm.cvv.$invalid,'has-success': theForm.cvv.$valid}">
             <label for="cvv" class="col-sm-2 control-label">cvv</label>
             <div class="col-sm-10">
-                <input id="cvv" name="cvv" type="text" class="form-control" data-ng-model="visa.cvv" data-ng-required="true"/>
+                <input id="cvv" name="cvv" type="text" class="form-control" data-ng-model="visa.cvv" data-ng-required="true" placeholder="Код безопастности" size="20"/>
             </div>
         </div>
         <div class="form-group" data-ng-class="{'has-error': theForm.cartNumber.$invalid,'has-success': theForm.cartNumber.$valid}">
-            <label for="cartNumber" class="col-sm-2 control-label">cartNumber</label>
+            <label for="cartNumber" class="col-sm-2 control-label">CartNumber</label>
             <div class="col-sm-10">
-                <input id="cartNumber" name="cartNumber" type="text" class="form-control" data-ng-model="visa.cartNumber" data-ng-required="true"/>
+                <input id="cartNumber" name="cartNumber" type="number" class="form-control" data-ng-model="visa.cartNumber" data-ng-required="true" placeholder="Номер карты" size="20"/>
             </div>
         </div>
 
         <div class="form-group" data-ng-class="{'has-error': theForm.summ.$invalid,'has-success': theForm.summ.$valid}">
-            <label for="summ" class="col-sm-2 control-label">summ</label>
-            <div class="col-sm-10">
-                <input id="summ" name="summ" type="text" class="form-control" data-ng-model="visa.summ" data-ng-required="true" disabled/>
+
+            <div class="col-sm-offset-2 col-sm-10">
+              <!--  <label for="summ" class="col-sm-2 control-label">summ</label>-->
+                <label class="text-info" class="form-control">Сумма товара: {{visa.summ | currency}}</label>
+
+
+               <!-- <input id="summ" name="summ" type="text" class="form-control" data-ng-model="visa.summ" data-ng-required="true" disabled/>-->
             </div>
         </div>
     </form>

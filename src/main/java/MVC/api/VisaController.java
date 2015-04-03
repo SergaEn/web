@@ -43,22 +43,22 @@ public class VisaController {
 
     @RequestMapping(value = "/api/payToVisa/{id:\\d+}", method = POST)
    /* @PreAuthorize("isAuthenticated()")*/
-    public ResponseEntity<Visa> buyVisa(final @PathVariable Integer id, final @RequestBody Visa buyVisa, final BindingResult bindingResult) {
+    public ResponseEntity<Phone> buyVisa(final @PathVariable Integer id, final @RequestBody Visa buyVisa, final BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             throw new IllegalArgumentException("Invalid arguments.");
         }
 
-        ResponseEntity<Visa> rv;
+        ResponseEntity<Phone> rv;
         Visa visa = visaRepository.findVisaCartNumber(buyVisa.getCartNumber());
         if (visa==null) /* throw new VisaDoesNotExistException("Виза не найдена");*/
-            return new ResponseEntity<Visa>(HttpStatus.CONFLICT);
+            return new ResponseEntity<Phone>(HttpStatus.CONFLICT);
         if (visa.getSumm()<buyVisa.getSumm()){
-            return new ResponseEntity<Visa>(HttpStatus.UNPROCESSABLE_ENTITY);
+            return new ResponseEntity<Phone>(HttpStatus.UNPROCESSABLE_ENTITY);
         }
         if (visa.getFirstName().equals(buyVisa.getFirstName())
                 &&visa.getLastName().equals(buyVisa.getLastName())
                 &&visa.getCartName().equals(buyVisa.getCartName())
-                &&visa.getExpirationDate().equals(buyVisa.getExpirationDate())
+                &&((GregorianCalendar) visa.getExpirationDate()).toZonedDateTime().getDayOfYear() == (((GregorianCalendar) buyVisa.getExpirationDate()).toZonedDateTime().getDayOfYear())
                 &&visa.getCvv().equals(buyVisa.getCvv())){
 
             Double result = visa.getSumm() - buyVisa.getSumm();
@@ -69,10 +69,10 @@ public class VisaController {
             phone.setCount(1);
             phoneRepository.saveAndFlush(phone);
 
-            return  new ResponseEntity<Visa>(visa, HttpStatus.OK);
+            return  new ResponseEntity<Phone>(phone, HttpStatus.OK);
 
 
-        }else return new ResponseEntity<Visa>(HttpStatus.CONFLICT);
+        }else return new ResponseEntity<Phone>(HttpStatus.CONFLICT);
 
 
 

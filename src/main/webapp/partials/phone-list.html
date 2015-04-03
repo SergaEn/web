@@ -9,6 +9,7 @@
                     <a href="#/phones/{{phone.id}}">{{phone.name}}</a>
                     <p>{{phone.description}}</p>
                     <p>Осталось на складе: {{phone.count}} шт.</p>
+
                 </div>
 
                 <div >
@@ -25,7 +26,7 @@
     <div ng-show="flagVisible">
         <!-- Подсчет общей стоимости всех выбранных услуг. Выводится по заданному формату валюты. -->
         <p class="text-center"> <b><span style="color: green">Всего заказано на сумму:<span>{{total() | currency}}  </span> </span> </b>
-            <button type="button" class=" btn btn-primary"  data-ng-click="openNewBuyDlg(1);">Купить</button>
+            <button type="button" class=" btn btn-primary"  data-ng-click="openNewDlg(total(),phone);">Купить</button>
         </p>
     </div>
 </div>
