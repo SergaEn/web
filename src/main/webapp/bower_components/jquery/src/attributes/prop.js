@@ -1,5 +1,5 @@
 define([
-	"../core",
+	"./",
 	"../core/access",
 	"./support"
 ], function( jQuery, access, support ) {

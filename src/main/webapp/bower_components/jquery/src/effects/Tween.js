@@ -1,5 +1,5 @@
 define([
-	"../core",
+	"./",
 	"../css"
 ], function( jQuery ) {
 

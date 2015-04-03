@@ -1,11 +1,9 @@
 package MVC.persistence.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by varArg on 31.03.2015.
@@ -24,8 +22,8 @@ public class Phone implements Serializable {
     private String name;
     private Integer count;
 
-/*    @OneToMany*//*(fetch = FetchType.EAGER, cascade = CascadeType.ALL)*/
-@ElementCollection
+
+    @ElementCollection
     private List<String> images;
     private String description;
     private Double cost;
@@ -86,8 +84,8 @@ public class Phone implements Serializable {
     }
 
     public void setCount(Integer count) {
-     if (this.count.equals(0)) this.count = 10;
-        this.count =  this.count - count;
+        if (this.count.equals(0)) this.count = 10;
+        this.count = this.count - count;
     }
 
     public void setImages(List<String> images) {

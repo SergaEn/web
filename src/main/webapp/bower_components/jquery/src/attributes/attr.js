@@ -1,5 +1,5 @@
 define([
-	"../core",
+	"./",
 	"../var/rnotwhite",
 	"../var/strundefined",
 	"../core/access",

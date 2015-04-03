@@ -1,5 +1,5 @@
 define([
-	"../core",
+	"./",
 	"../var/strundefined"
 ], function( jQuery, strundefined ) {
 

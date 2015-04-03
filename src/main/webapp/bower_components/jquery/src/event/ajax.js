@@ -1,5 +1,5 @@
 define([
-	"../core",
+	"./",
 	"../event"
 ], function( jQuery ) {
 

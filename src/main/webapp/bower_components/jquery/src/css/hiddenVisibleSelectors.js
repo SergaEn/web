@@ -1,5 +1,5 @@
 define([
-	"../core",
+	"./",
 	"../selector"
 ], function( jQuery ) {
 

@@ -1,5 +1,5 @@
 define([
-	"../core",
+	"./",
 	"../manipulation" // appendTo
 ], function( jQuery ) {
 

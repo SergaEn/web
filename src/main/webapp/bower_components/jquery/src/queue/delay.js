@@ -1,5 +1,5 @@
 define([
-	"../core",
+	"./",
 	"../queue",
 	"../effects" // Delay is optional because of this dependency
 ], function( jQuery ) {

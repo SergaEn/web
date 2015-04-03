@@ -1,5 +1,5 @@
 define([
-	"../core",
+	"./",
 	"../core/parseHTML",
 	"../ajax",
 	"../traversing",

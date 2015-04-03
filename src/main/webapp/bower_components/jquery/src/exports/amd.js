@@ -1,5 +1,5 @@
 define([
-	"../core"
+	"./"
 ], function( jQuery ) {
 
 // Register as a named AMD module, since jQuery can be concatenated with other

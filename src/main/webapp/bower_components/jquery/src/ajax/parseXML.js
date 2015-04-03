@@ -1,5 +1,5 @@
 define([
-	"../core"
+	"./"
 ], function( jQuery ) {
 
 // Cross-browser xml parsing

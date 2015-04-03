@@ -1,5 +1,5 @@
 define([
-	"../core",
+	"./",
 	"../var/rnotwhite",
 	"./accepts"
 ], function( jQuery, rnotwhite ) {

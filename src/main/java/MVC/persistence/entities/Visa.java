@@ -1,13 +1,10 @@
 package MVC.persistence.entities;
 
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
+
 
 /**
  * Created by varArg on 31.03.2015.
@@ -40,16 +37,9 @@ public class Visa implements Serializable {
     private Calendar expirationDate;
     private Double summ;
 
-/*    public Account getAccount() {
-        return account;
+
+    public Visa() {
     }
-*//**/
-
-/*    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Account account;
-*/
-
-    public Visa(){}
 
     @Override
     public String toString() {
@@ -63,7 +53,7 @@ public class Visa implements Serializable {
                 '}';
     }
 
-    public Visa( String lastName, String cartName, String cartNumber, Integer cvv, Calendar expirationDate, String firstName, Double summ) {
+    public Visa(String lastName, String cartName, String cartNumber, Integer cvv, Calendar expirationDate, String firstName, Double summ) {
 
         this.lastName = lastName;
         this.cartName = cartName;
@@ -71,7 +61,7 @@ public class Visa implements Serializable {
         this.cvv = cvv;
         this.expirationDate = expirationDate;
         this.firstName = firstName;
-        this.summ =summ;
+        this.summ = summ;
     }
 
     public Integer getId() {
@@ -137,7 +127,6 @@ public class Visa implements Serializable {
     public void setSumm(Double summ) {
         this.summ = summ;
     }
-
 
 
 }

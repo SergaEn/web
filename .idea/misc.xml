@@ -34,6 +34,9 @@
       <item index="0" class="java.lang.String" itemvalue="org.springframework.web.bind.annotation.RestController" />
     </list>
   </component>
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$" />
+  </component>
   <component name="IdProvider" IDEtalkID="487D532D044C41215FB24E15A15CC3E4" />
   <component name="MavenProjectsManager">
     <option name="originalFiles">

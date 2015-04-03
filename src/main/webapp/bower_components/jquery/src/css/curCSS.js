@@ -1,5 +1,5 @@
 define([
-	"../core",
+	"./",
 	"./var/rnumnonpx",
 	"./var/rmargin",
 	"./var/getStyles",

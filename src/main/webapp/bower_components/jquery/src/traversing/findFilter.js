@@ -1,5 +1,5 @@
 define([
-	"../core",
+	"./",
 	"../var/indexOf",
 	"./var/rneedsContext",
 	"../selector"

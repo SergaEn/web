@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,14 +31,13 @@ public class AccoutController {
     AccountRepository accountRepository;
 
     @RequestMapping(value = "/api/accout/", method = POST)
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Account> login(final @RequestBody Account account, final BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new IllegalArgumentException("Invalid arguments.");
         }
 
         Account acc = accountRepository.findByUsername(account.getUsername());
-        if (acc ==null)
+        if (acc == null)
             return new ResponseEntity<Account>(HttpStatus.CONFLICT);
 
         if (acc.getPassword().equals(account.getPassword())) {
@@ -48,18 +48,18 @@ public class AccoutController {
     }
 
     @RequestMapping(value = "/api/register/", method = POST)
-    @PreAuthorize("isAuthenticated()")
+    @Transactional(readOnly = true)
     public ResponseEntity<Account> register(final @RequestBody Account account, final BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new IllegalArgumentException("Invalid arguments.");
         }
 
         Account acc = accountRepository.findByUsername(account.getUsername());
-        if (acc !=null)
+        if (acc != null)
             return new ResponseEntity<Account>(HttpStatus.CONFLICT);
 
 
-        if (account.getUsername().length() > 1&&account.getPassword().length() > 4) {
+        if (account.getUsername().length() > 1 && account.getPassword().length() > 4) {
             accountRepository.save(account);
             return new ResponseEntity<Account>(account, HttpStatus.OK);
         }

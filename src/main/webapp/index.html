@@ -39,9 +39,11 @@
                 <input ng-model="query" class="form-control" placeholder="Найти...">
             </form>
         </ul>
+
        <ul class="nav navbar-nav navbar-right" ng-controller="authorization">
+
            <form class="navbar-form navbar-left" ng-controller="registration">
-               <p class="text-danger"><span style="color: #eea236" ng-bind="username"></span></p>
+               <a class="test-left"><span style="color: #eea236" ng-bind="username"></span></a>
                <div ng-show="authorization" >
             <button type="button" class="btn btn-default bg-info" data-ng-click="login();">Вход</button>
            <button type="button" class="btn btn-primary bg-success" data-ng-click="register();">Регистрация</button>

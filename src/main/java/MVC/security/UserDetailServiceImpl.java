@@ -1,7 +1,7 @@
 package MVC.security;
 
 import MVC.persistence.entities.Account;
-import MVC.services.AccountService;
+import MVC.persistence.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,12 +13,12 @@ import org.springframework.stereotype.Component;
 public class UserDetailServiceImpl implements UserDetailsService {
 
     @Autowired
-    private AccountService service;
+    private AccountRepository service;
 
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        Account account = service.findByAccountName(name);
-        if(account == null) {
+        Account account = service.findByUsername(name);
+        if (account == null) {
             throw new UsernameNotFoundException("no user found with " + name);
         }
         return new AccountUserDetails(account);
