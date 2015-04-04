@@ -1,13 +1,15 @@
 package MVC;
 
 import MVC.persistence.entities.Phone;
+import MVC.persistence.entities.Visa;
 import MVC.persistence.repositories.PhoneRepository;
+import MVC.persistence.repositories.VisaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by varArg on 04.04.2015.
@@ -16,8 +18,14 @@ import java.util.List;
 @Component
 class CommandRunner implements CommandLineRunner {
 
+    @Autowired
+    VisaRepository visaRepository;
+
     @Override
     public void run(String... arg0) throws Exception {
+
+        visaRepository.save(new Visa(500.5, "firstName", "lastName", "visa", "987654321", 888, new GregorianCalendar(2016, 5, 20)));
+        visaRepository.save(new Visa(99999.5, "Sergei", "En", "visa", "123456789", 999, new GregorianCalendar(2015, 5, 20)));
 
 
         List images = Arrays.asList("img/phones/dell-streak-7.0.jpg",

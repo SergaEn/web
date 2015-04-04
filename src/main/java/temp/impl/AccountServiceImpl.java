@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 
-
 public class AccountServiceImpl implements AccountService {
 
     @Autowired
@@ -22,7 +21,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private VisaRepository visaRepo;
-
 
 
     @Override
@@ -34,8 +32,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account createAccount(Account data) {
         Account account = accountRepo.findByUsername(data.getUsername());
-        if(account != null)
-        {
+        if (account != null) {
             throw new AccountExistsException();
         }
 

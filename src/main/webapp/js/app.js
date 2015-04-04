@@ -14,18 +14,18 @@ phonecatApp.config(
     function ($routeProvider) {
 
         $routeProvider.
-               when('/phones', {
+            when('/phones', {
                 templateUrl: 'partials/phone-list.html',
                 controller: 'PhoneListCtrl'
             }).
-           /* when('/login', {
-                templateUrl: 'partials/login.html',
-                controller: 'LoginCtrl'
-            }).
-            when('/register', {
-                templateUrl: 'partials/register.html',
-                controller: 'RegisterCtrl'
-            }).*/
+            /* when('/login', {
+             templateUrl: 'partials/login.html',
+             controller: 'LoginCtrl'
+             }).
+             when('/register', {
+             templateUrl: 'partials/register.html',
+             controller: 'RegisterCtrl'
+             }).*/
             when('/phones/:id', {
                 templateUrl: 'partials/phone-detail.html',
                 controller: 'PhoneDetailCtrl'

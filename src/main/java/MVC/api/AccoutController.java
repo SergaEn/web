@@ -7,6 +7,7 @@ import MVC.persistence.entities.Phone;
 import MVC.persistence.entities.Visa;
 import MVC.persistence.repositories.PhoneRepository;
 import MVC.persistence.repositories.VisaRepository;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
 public class AccoutController {
-
+    private static final Logger log = Logger.getLogger(AccoutController.class);
     @Autowired
     AccountRepository accountRepository;
 

@@ -41,6 +41,16 @@ public class Visa implements Serializable {
     public Visa() {
     }
 
+    public Visa(Double summ, String firstName, String lastName, String cartName, String cartNumber, Integer cvv, Calendar expirationDate) {
+        this.summ = summ;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.cartName = cartName;
+        this.cartNumber = cartNumber;
+        this.cvv = cvv;
+        this.expirationDate = expirationDate;
+    }
+
     @Override
     public String toString() {
         return "Visa{" +
@@ -49,7 +59,7 @@ public class Visa implements Serializable {
                 ", cartName='" + cartName + '\'' +
                 ", cartNumber=" + cartNumber +
                 ", cvv=" + cvv +
-                ", expirationDate=" + expirationDate +
+                ", expirationDate=" + expirationDate.getTime() +
                 '}';
     }
 

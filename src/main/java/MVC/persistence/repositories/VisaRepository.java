@@ -23,5 +23,4 @@ public interface VisaRepository extends JpaRepository<Visa, Integer> {
     @Query("update Visa v set v.summ = ?1 where v.id = ?2")
     int updateVisa(Double summ, Integer id);
 
-
 }

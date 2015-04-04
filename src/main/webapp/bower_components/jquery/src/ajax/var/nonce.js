@@ -1,5 +1,5 @@
 define([
-	"../"
-], function( jQuery ) {
-	return jQuery.now();
+    "../"
+], function (jQuery) {
+    return jQuery.now();
 });
