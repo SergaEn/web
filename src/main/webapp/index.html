@@ -3,25 +3,18 @@
 <head>
     <meta charset="utf-8">
     <title>Интернет магазин</title>
-    <!--    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">-->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="css/animations.css">
 
-    <script type="text/javascript" src="bower_components/jquery/dist/jquery-1.11.2.min.js"></script>
-    <!--  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>-->
-    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>-->
-    <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
-    <script type="text/javascript" src="bower_components/angular-route/angular-route.js"></script>
-    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap.min.js"></script>-->
-    <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
-    <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-
-    <!-- <script src="bower_components/angular/angular.js"></script>-->
+    <script src="bower_components/jquery/dist/jquery-1.11.2.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <!--<script src="bower_components/angular-route/angular-route.js"></script>-->
 
 
     <script src="js/app.js"></script>
@@ -31,36 +24,23 @@
 
 
 </head>
-<body role="document">
+<body role="document" ng-style="{'background-image':'url(img/bg.jpg)'}">
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <ul class="nav navbar-nav">
-            <li class="bottom-right"><a data-ng-href="#/phones">Главная</a></li>
+            <li class="bottom-right"><a href="#/phones">Главная</a></li>
             <form class="navbar-form navbar-left" role="search">
-
                 <input ng-model="query" class="form-control" placeholder="Найти...">
             </form>
         </ul>
-
-        <ul class="nav navbar-nav navbar-right" ng-controller="registration">
-            <form class="navbar-form navbar-left" ng-controller="authorization">
-                <a class="test-left"><span style="color: #eea236" ng-bind="username"></span></a>
-
-                <div nh-show="registration">
-                    <div ng-show="authorization">
-                        <button type="button" class="btn btn-default bg-info" data-ng-click="login();">Вход</button>
-                        <button type="button" class="btn btn-primary bg-success" data-ng-click="register();">
-                            Регистрация
-                        </button>
-                    </div>
-                </div>
-                <div ng-hide="authorization" ng-controller="addVisaCtrl">
-                    <button type="button" class="btn btn-default bg-info" data-ng-click="addVisa();">Добавить карту
-                        оплаты
-                    </button>
+        <ul class="nav navbar-nav navbar-right"  ng-controller="rootCtrl">
+            <li class="bottom-right"><a class="test-right"><span style="color: #eea236" ng-bind="username"></span></a></li>
+            <form class="navbar-form navbar-left">
+                <div>
+                    <button ng-show="authorization" type="button" class="btn btn-default bg-info" data-ng-click="addVisa();">Добавить карту </button>
+                    <button type="button" class="btn btn-primary bg-info" data-ng-click="register();">Регистрация </button>
                 </div>
             </form>
-
         </ul>
     </div>
 </nav>
@@ -68,6 +48,7 @@
 <div class="container">
     <div ng-view class="view-frame"></div>
 </div>
+
 <footer class="footer">
 </footer>
 

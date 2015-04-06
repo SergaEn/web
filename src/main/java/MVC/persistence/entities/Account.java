@@ -1,9 +1,10 @@
 package MVC.persistence.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 
@@ -18,14 +19,13 @@ public class Account implements Serializable {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //@JsonIgnore
-    @Column(name = "password", length = 30, nullable = false)
+    @JsonIgnore
+    @Column(name = "password", length = 35, nullable = false)
     @NotNull
     private String password;
 
     @Column(name = "username", length = 30, unique = true, nullable = false)
     @NotNull
-    @Size(max = 30)
     private String username;
 
     private String grantedAuthority;

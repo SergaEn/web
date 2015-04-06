@@ -13,16 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.GregorianCalendar;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -74,7 +70,7 @@ public class VisaController {
             visa.setSumm(result);
             Phone phone = phoneRepository.findOne(id);
             log.info(phone.toString());
-            phone.setCount(1);
+            phone.setCount(phone.getCount() - 1);
 
             try {
                 phoneRepository.saveAndFlush(phone);
@@ -90,8 +86,7 @@ public class VisaController {
     }
 
     @RequestMapping(value = "/api/addVisa/", method = POST)
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Account> addVisa(final @RequestBody Visa buyVisa, final BindingResult bindingResult) {
+    public ResponseEntity<Visa> addVisa(final @RequestBody Visa buyVisa, final BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new IllegalArgumentException("Invalid arguments.");
         }
@@ -100,12 +95,11 @@ public class VisaController {
         Visa visa = visaRepository.findVisaCartNumber(buyVisa.getCartNumber());
         log.info(visa);
         if (visa != null)
-            return new ResponseEntity<Account>(HttpStatus.CONFLICT);
+            return new ResponseEntity<Visa>(HttpStatus.CONFLICT);
         if (buyVisa.getCvv() == null || buyVisa.getCartNumber() == null || buyVisa.getExpirationDate() == null || buyVisa.getCartName() == null
                 || buyVisa.getFirstName() == null || buyVisa.getLastName() == null) {
-            return new ResponseEntity<Account>(HttpStatus.UNPROCESSABLE_ENTITY);
+            return new ResponseEntity<Visa>(HttpStatus.UNPROCESSABLE_ENTITY);
         }
-
         try {
             visaRepository.save(buyVisa);
         } catch (Exception e) {
@@ -113,11 +107,7 @@ public class VisaController {
         }
         log.info("Виза добавлена: " + buyVisa.toString());
 
-        String loggedUsername = SecurityContextHolder.getContext().getAuthentication().getName();
-        Account account = accountRepository.findByUsername(loggedUsername);
-        log.info(account.toString());
-
-        return new ResponseEntity<Account>(account, HttpStatus.OK);
+        return new ResponseEntity<Visa>(buyVisa, HttpStatus.OK);
 
 
     }

@@ -4,12 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
+
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -26,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configAuthBuilder(AuthenticationManagerBuilder builder) throws Exception {
-        builder.userDetailsService(userDetailService);
+        builder.userDetailsService(userDetailService).passwordEncoder(new Md5PasswordEncoder());
     }
 
     @Override
@@ -34,7 +36,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web
                 .ignoring()
                 .antMatchers("/webapp/**");
-
 
     }
 
@@ -49,8 +50,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .headers()
-                .frameOptions() // OEmbedController#embedTrack uses an iframe
+                .frameOptions()
                 .disable();
 
     }
+
 }

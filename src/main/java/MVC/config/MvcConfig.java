@@ -14,8 +14,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         @RequestMapping({
                 "/phones",
                 "/phones/{id:\\w+}",
-                "/singIn",
-                "/cart",
+                "/update",
                 "/login",
                 "/register"
         })

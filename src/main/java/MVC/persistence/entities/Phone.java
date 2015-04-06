@@ -1,6 +1,7 @@
 package MVC.persistence.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -10,19 +11,15 @@ import java.util.List;
  */
 @Entity
 @Table(name = "phone")
-
-
+@JsonIgnoreProperties
 public class Phone implements Serializable {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String name;
     private Integer count;
-
-
     @ElementCollection
     private List<String> images;
     private String description;
@@ -84,8 +81,7 @@ public class Phone implements Serializable {
     }
 
     public void setCount(Integer count) {
-        if (this.count.equals(0)) this.count = 10;
-        this.count = this.count - count;
+        this.count = count;
     }
 
     public void setImages(List<String> images) {
@@ -99,5 +95,6 @@ public class Phone implements Serializable {
     public void setCost(Double cost) {
         this.cost = cost;
     }
+
 
 }

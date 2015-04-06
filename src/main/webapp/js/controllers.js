@@ -9,6 +9,7 @@ phonecatControllers.controller('PhoneListCtrl', function ($scope, $http, $modal)
         $scope.phones = data;
     });
 
+
     $scope.openNewBuyDlg = function (phone) {
         var modalInstance = $modal.open({
             templateUrl: '/partials/newBuy.html',
@@ -29,7 +30,6 @@ phonecatControllers.controller('PhoneListCtrl', function ($scope, $http, $modal)
             function () {
             }
         );
-
     };
 
 
@@ -47,18 +47,7 @@ phonecatControllers.controller('PhoneListCtrl', function ($scope, $http, $modal)
                 }
             }
         });
-
-        /*    modalInstance.result.then(
-         function(newPhone) {
-         console.log(phone)
-         phone.count = newPhone.count;
-         },
-         function() {
-         }
-         );*/
-
     };
-
 
     $scope.flagVisible = false;
     /* $scope.toCart = function() {
@@ -115,10 +104,7 @@ phonecatControllers.controller('PhoneDetailCtrl', function ($scope, $http, $rout
             function () {
             }
         );
-
     };
-
-
 });
 
 
@@ -160,12 +146,6 @@ phonecatControllers.controller('AddNewBuyCtrl', function ($scope, $modalInstance
         }).success(function (data) {
             $scope.submitting = false;
             $window.alert("Покупка произведена успешно!");
-            /* */
-            /*   console.log(data.count);
-             console.log( phone.count);
-             console.log($scope.phone.count);*/
-            /*
-             phone.count = data.count;*/
             $modalInstance.close(data);
         }).error(function (data, status) {
             $scope.submitting = false;
@@ -175,8 +155,6 @@ phonecatControllers.controller('AddNewBuyCtrl', function ($scope, $modalInstance
                 $scope.badRequest = 'Карта не найдена!';
             else if (status === 422)
                 $scope.badRequest = 'Недостаточно средств на карте!';
-
-
         });
     };
 });
@@ -189,8 +167,6 @@ phonecatControllers.controller('PhoneCountCtrl', function ($scope) {
         $scope.flagVisible = !$scope.flagVisible;
         $scope.addProduct = "Покупка произведена успешно!"
     };
-
-
 });
 
 
@@ -232,12 +208,6 @@ phonecatControllers.controller('AddNewCtrl', function ($scope, $modalInstance, $
         }).success(function (data) {
             $scope.submitting = false;
             $window.alert("Покупка произведена успешно!");
-            /* */
-            /*   console.log(data.count);
-             console.log( phone.count);
-             console.log($scope.phone.count);*/
-            /*
-             phone.count = data.count;*/
             $modalInstance.close(data);
         }).error(function (data, status) {
             $scope.submitting = false;
@@ -254,9 +224,10 @@ phonecatControllers.controller('AddNewCtrl', function ($scope, $modalInstance, $
 });
 
 
-phonecatControllers.controller('authorization', function ($scope, $http, $modal) {
-    $scope.authorization = true;
-    $scope.username = 'Супер магазин по продаже телефонов!!';
+phonecatControllers.controller('rootCtrl', function ($scope, $http, $modal) {
+
+    $scope.authorization = false;
+    $scope.username = ' ';
 
     $scope.login = function () {
         var modalInstance = $modal.open({
@@ -268,78 +239,51 @@ phonecatControllers.controller('authorization', function ($scope, $http, $modal)
 
         modalInstance.result.then(
             function (account) {
-                $scope.username = 'Добро пожаловать в наш магазин: ' + account.username;
+                $scope.username = 'Добро пожаловать:   ' + account.username;
                 console.log($scope.username)
                 $scope.authorization = !$scope.authorization;
-
+                localStorage.setItem("session", {});
             },
             function () {
             }
         );
-
     };
-
-    $scope.addVisa = function () {
-        var modalInstance = $modal.open({
-            templateUrl: '/partials/addVisa.html',
-            controller: 'addVisaCtrl',
-            scope: $scope
-
-        });
-
-        modalInstance.result.then(
-            function (account) {
-                $scope.username = 'Добро пожаловать в наш магазин: ' + account.username;
-                console.log($scope.username)
-                /* $scope.authorization = !$scope.authorization;*/
-
-            },
-            function () {
-            }
-        );
-
-    };
-
-
-});
-
-phonecatControllers.controller('addVisaCtrl', function ($scope, $http, $modal) {
-    /* $scope.authorization = true;*/
-    $scope.username = 'Супер магазин по продаже телефонов!!';
 
     $scope.addVisa = function () {
         var modalInstance = $modal.open({
             templateUrl: '/partials/addVisa.html',
             controller: 'addNewVisaCtrl',
             scope: $scope
+        });
+    };
+
+    $scope.register = function () {
+        var modalInstance = $modal.open({
+            templateUrl: '/partials/register.html',
+            controller: 'registerCtrl',
+            scope: $scope
 
         });
 
         modalInstance.result.then(
             function (account) {
-                $scope.username = 'Добро пожаловать в наш магазин: ' + account.username;
+                $scope.username = 'Добро пожаловать: ' + account.username;
                 console.log($scope.username)
-                /* $scope.authorization = !$scope.authorization;*/
-
+                $scope.authorization = !$scope.authorization;
+                localStorage.setItem("session", {});
             },
             function () {
             }
         );
 
     };
-
-
 });
 
-
 phonecatControllers.controller('loginCtrl', function ($scope, $modalInstance, $http, $window) {
-
     $scope.account = {
         username: null,
         password: null
     };
-
-
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
@@ -352,22 +296,19 @@ phonecatControllers.controller('loginCtrl', function ($scope, $modalInstance, $h
             data: $scope.account
         }).success(function (data) {
             $scope.submitting = false;
-            $window.alert("Авторизация успешно завершина!");
+            $window.alert("Авторизация успешно завершина! \n Добро пожаловать: "+data.username);
             $modalInstance.close(data);
         }).error(function (data, status) {
             $scope.submitting = false;
             if (status === 400)
-                $scope.badRequest = data;
+                $scope.badRequest = "Что-то пошло не так....";
             else if (status === 409)
                 $scope.badRequest = 'Пользователь не найден!';
             else if (status === 422)
                 $scope.badRequest = 'Неверный пароль!';
-
-
         });
     };
 });
-
 
 phonecatControllers.controller('addNewVisaCtrl', function ($scope, $modalInstance, $http, $window) {
 
@@ -417,51 +358,20 @@ phonecatControllers.controller('addNewVisaCtrl', function ($scope, $modalInstanc
         }).error(function (data, status) {
             $scope.submitting = false;
             if (status === 400)
-                $scope.badRequest = data;
+                $scope.badRequest = "Что-то пошло не так....";
             else if (status === 409)
-                $scope.badRequest = 'Карта с таким номером уже существует!';
+                $scope.badRequest = 'Карта с таким номером: '+$scope.visa.cartNumber+' уже существует!';
             else if (status === 422)
                 $scope.badRequest = 'Не все поля заполенены!';
-
-
         });
     };
-});
-
-
-phonecatControllers.controller('registration', function ($scope, $http, $modal) {
-    $scope.authorization = true;
-    $scope.username = 'Супер магазин по продаже телефонов!!';
-    $scope.register = function () {
-        var modalInstance = $modal.open({
-            templateUrl: '/partials/register.html',
-            controller: 'registerCtrl',
-            scope: $scope
-
-        });
-
-        modalInstance.result.then(
-            function (account) {
-                $scope.username = 'Добро пожаловать: ' + account.username;
-                console.log($scope.username)
-                $scope.authorization = !$scope.authorization;
-            },
-            function () {
-            }
-        );
-
-    };
-
-
 });
 
 phonecatControllers.controller('registerCtrl', function ($scope, $modalInstance, $http, $window) {
-
     $scope.account = {
         username: null,
         password: null
     };
-
 
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
@@ -475,23 +385,16 @@ phonecatControllers.controller('registerCtrl', function ($scope, $modalInstance,
             data: $scope.account
         }).success(function (data) {
             $scope.submitting = false;
-            $window.alert("Регистрация успешно завершина!");
-            /* */
-            /*   console.log(data.count);
-             console.log( phone.count);
-             console.log($scope.phone.count);*/
-            /*
-             phone.count = data.count;*/
+            $window.alert("Регистрация успешно завершина! \n Добро пожаловать - "+$scope.account.username);
             $modalInstance.close(data);
         }).error(function (data, status) {
             $scope.submitting = false;
             if (status === 400)
-                $scope.badRequest = data;
+                $scope.badRequest = "Что-то пошло не так....";
             else if (status === 409)
-                $scope.badRequest = 'Такое имя уже занято!';
+                $scope.badRequest = 'Имя: '+$scope.account.username+' уже занято!';
             else if (status === 422)
                 $scope.badRequest = 'Слишком мало символов....';
-
 
         });
     };

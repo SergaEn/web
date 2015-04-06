@@ -5,28 +5,28 @@
              ng-repeat="img in phone.images"
              ng-class="{active: mainImageUrl==img}">
     </div>
+    <div class="text-center">
+        <h1>{{phone.name}}</h1>
 
-    <h1>{{phone.name}}</h1>
+        <p>
 
-    <p>{{phone.description}}</p>
-
+        <h3>{{phone.description}}</h3></p>
+    </div>
     <ul class="phone-thumbs">
         <li ng-repeat="img in phone.images">
             <img ng-src="{{img}}" ng-click="setImage(img)">
         </li>
     </ul>
-    <ul class="specs">
+    <ul class="nav navbar-right ">
         <li>
-            <dt>Количество:</dt>
-            <dd><h4>{{phone.count}}</h4></dd>
+            <h4>Количество: {{phone.count}}</h4>
+            <b><h2>Цена: {{phone.cost}}</h2></b>
         </li>
         <li>
-            <dt>Цена:</dt>
-            <dd><h4>{{phone.cost}}</h4></dd>
-
+            <button type="button" class="btn btn-success " data-ng-click="openNewBuyDlg();">Купить</button>
         </li>
 
-        <button type="button" class="btn btn-success" data-ng-click="openNewBuyDlg();">Купить</button>
+
     </ul>
 
 
