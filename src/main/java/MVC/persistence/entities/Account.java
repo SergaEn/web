@@ -19,8 +19,8 @@ public class Account implements Serializable {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @JsonIgnore
-    @Column(name = "password", length = 35, nullable = false)
+
+    @Column(name = "password", length = 255, nullable = false)
     @NotNull
     private String password;
 

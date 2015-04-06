@@ -229,15 +229,15 @@ phonecatControllers.controller('rootCtrl', function ($scope, $http, $modal) {
     $scope.authorization = false;
     $scope.username = ' ';
 
-    $scope.login = function () {
+/*    $scope.login = function () {
         var modalInstance = $modal.open({
             templateUrl: '/partials/login.html',
             controller: 'loginCtrl',
             scope: $scope
 
-        });
+        });*/
 
-        modalInstance.result.then(
+ /*       modalInstance.result.then(
             function (account) {
                 $scope.username = 'Добро пожаловать:   ' + account.username;
                 console.log($scope.username)
@@ -248,7 +248,7 @@ phonecatControllers.controller('rootCtrl', function ($scope, $http, $modal) {
             }
         );
     };
-
+*/
     $scope.addVisa = function () {
         var modalInstance = $modal.open({
             templateUrl: '/partials/addVisa.html',
@@ -278,7 +278,7 @@ phonecatControllers.controller('rootCtrl', function ($scope, $http, $modal) {
 
     };
 });
-
+/*
 phonecatControllers.controller('loginCtrl', function ($scope, $modalInstance, $http, $window) {
     $scope.account = {
         username: null,
@@ -308,14 +308,9 @@ phonecatControllers.controller('loginCtrl', function ($scope, $modalInstance, $h
                 $scope.badRequest = 'Неверный пароль!';
         });
     };
-});
+});*/
 
 phonecatControllers.controller('addNewVisaCtrl', function ($scope, $modalInstance, $http, $window) {
-
-    $scope.account = {
-        username: null,
-        password: null
-    };
 
     $scope.visa = {
         firstName: null,
