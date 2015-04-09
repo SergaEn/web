@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Created by varArg on 31.03.2015.
  */
-@Transactional(readOnly = true)
+
 public interface VisaRepository extends JpaRepository<Visa, Integer> {
 
 

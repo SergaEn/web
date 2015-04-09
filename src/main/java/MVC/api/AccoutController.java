@@ -16,12 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
+@Transactional()
 public class AccoutController {
     private final Logger log = Logger.getLogger(AccoutController.class);
 
     @Autowired
     AccountRepository accountRepository;
-
+    @Transactional(readOnly = true)
     @RequestMapping(value = "/api/accout/", method = POST)
     public ResponseEntity<Account> login(final @RequestBody Account account, final BindingResult bindingResult) {
         Md5PasswordEncoder encoder = new Md5PasswordEncoder();
@@ -41,7 +42,6 @@ public class AccoutController {
     }
 
     @RequestMapping(value = "/api/register/", method = POST)
-    @Transactional(readOnly = true)
     public ResponseEntity<Account> register(final @RequestBody Account account, final BindingResult bindingResult) {
         Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 

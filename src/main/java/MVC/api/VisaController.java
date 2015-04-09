@@ -26,7 +26,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
  * Created by varArg on 02.04.2015.
  */
 @RestController
-@Transactional(readOnly = true)
+@Transactional()
 public class VisaController {
     private static final Logger log = Logger.getLogger(VisaController.class);
 
