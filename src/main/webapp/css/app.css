@@ -3,7 +3,6 @@
 body {
     padding-top: 90px;
     padding-bottom: 30px;
-    background-image: url(img/bg.jpg) ;
     background-repeat: repeat;
    /* background-color: #222020;*/
 }
@@ -42,7 +41,6 @@ body {
 
 .phones li {
     clear: both;
-    height: 115px;
     padding-top: 15px;
 }
 
@@ -125,4 +123,16 @@ div.total {
 
 div.total span {
     float: right;
+}
+
+.modal-dialog {
+    max-width:400px;
+}
+
+label.col-sm-4.control-label{
+    text-align: left;
+}
+
+.mycss{
+    text-align: center;
 }

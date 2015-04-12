@@ -9,8 +9,8 @@
 
     <script src="bower_components/jquery/dist/jquery-1.11.2.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="bower_components/angular/angular.min.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+   <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
@@ -34,11 +34,15 @@
             </form>
         </ul>
         <ul class="nav navbar-nav navbar-right"  ng-controller="rootCtrl">
-            <li class="bottom-right"><a class="test-right"><span style="color: #eea236" ng-bind="username"></span></a></li>
+            <li class="bottom-right"><a class="test-right" ng-show="isLoggedIn()" ><span style="color: #eea236" ng-bind="username"></span></a></li>
             <form class="navbar-form navbar-left">
-                <div>
-                    <button ng-show="authorization" type="button" class="btn btn-default bg-info" data-ng-click="addVisa();">Добавить карту </button>
-                    <button type="button" class="btn btn-primary bg-info" data-ng-click="register();">Регистрация </button>
+                <div ng-hide="isLoggedIn()">
+                    <button type="button" class="btn btn-default bg-info" data-ng-click="login()">Вход</button>
+                    <button type="button" class="btn btn-primary bg-info" data-ng-click="register()">Регистрация </button>
+                </div>
+                <div ng-show="isLoggedIn()">
+                    <button  type="button" class="btn btn-default bg-info" data-ng-click="addVisa()">Добавить карту </button>
+                    <button type="button" class="btn btn-default bg-info" data-ng-click="logout()">Выход</button>
                 </div>
             </form>
         </ul>

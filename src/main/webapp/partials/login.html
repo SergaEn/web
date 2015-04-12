@@ -14,18 +14,18 @@
         </div>
         <div class="form-group"
              data-ng-class="{'has-error': theForm.inputName.$invalid,'has-success': theForm.inputName.$valid}">
-            <label for="inputName" class="col-sm-2 control-label">FirstName</label>
+            <label for="inputName" class="col-sm-4 control-label">FirstName</label>
 
-            <div class="col-sm-5">
+            <div class="col-sm-8">
                 <input id="inputName" name="inputName" type="text" class="form-control" data-ng-model="account.username"
                        data-ng-required="true" placeholder="Логин" size="20"/>
             </div>
         </div>
         <div class="form-group"
              data-ng-class="{'has-error': theForm.password.$invalid,'has-success': theForm.password.$valid}">
-            <label for="password" class="col-sm-2 control-label">Password</label>
+            <label for="password" class="col-sm-4 control-label">Password</label>
 
-            <div class="col-sm-5">
+            <div class="col-sm-8">
                 <input id="password" name="password" type="password" class="form-control"
                        data-ng-model="account.password" data-ng-required="true" placeholder="Пароль" size="20"/>
             </div>

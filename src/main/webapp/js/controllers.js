@@ -1,8 +1,28 @@
-'use strict';
-
-/* Controllers */
 
 var phonecatControllers = angular.module('phonecatControllers', [])
+
+    .factory('sessionService', function($http) {
+        var session = {};
+        session.login = function(data) {
+            return $http.post("/login", "username=" + data.username +
+            "&password=" + data.password, {
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            } ).then(function(data) {
+                alert("login successful");
+                localStorage.setItem("session", {});
+            }, function(data) {
+                alert("error logging in");
+            });
+        };
+        session.logout = function() {
+            localStorage.removeItem("session");
+        };
+        session.isLoggedIn = function() {
+            return localStorage.getItem("session") !== null;
+        };
+        return session;
+    })
+
 
 phonecatControllers.controller('PhoneListCtrl', function ($scope, $http, $modal) {
     $http.get('/api/phones').success(function (data) {
@@ -155,6 +175,8 @@ phonecatControllers.controller('AddNewBuyCtrl', function ($scope, $modalInstance
                 $scope.badRequest = 'Карта не найдена!';
             else if (status === 422)
                 $scope.badRequest = 'Недостаточно средств на карте!';
+            else if (status === 401)
+                $scope.badRequest = 'Необходимо авторизоваться!';
         });
     };
 });
@@ -224,31 +246,27 @@ phonecatControllers.controller('AddNewCtrl', function ($scope, $modalInstance, $
 });
 
 
-phonecatControllers.controller('rootCtrl', function ($scope, $http, $modal) {
+phonecatControllers.controller('rootCtrl', function ($scope, $http, $modal,sessionService) {
+    $scope.isLoggedIn = sessionService.isLoggedIn;
+    $scope.logout = sessionService.logout;
 
-    $scope.authorization = false;
-    $scope.username = ' ';
-
-/*    $scope.login = function () {
+   $scope.login = function () {
         var modalInstance = $modal.open({
             templateUrl: '/partials/login.html',
             controller: 'loginCtrl',
             scope: $scope
 
-        });*/
+        });
 
- /*       modalInstance.result.then(
+       modalInstance.result.then(
             function (account) {
-                $scope.username = 'Добро пожаловать:   ' + account.username;
-                console.log($scope.username)
-                $scope.authorization = !$scope.authorization;
                 localStorage.setItem("session", {});
             },
             function () {
             }
         );
     };
-*/
+
     $scope.addVisa = function () {
         var modalInstance = $modal.open({
             templateUrl: '/partials/addVisa.html',
@@ -267,9 +285,6 @@ phonecatControllers.controller('rootCtrl', function ($scope, $http, $modal) {
 
         modalInstance.result.then(
             function (account) {
-                $scope.username = 'Добро пожаловать: ' + account.username;
-                console.log($scope.username)
-                $scope.authorization = !$scope.authorization;
                 localStorage.setItem("session", {});
             },
             function () {
@@ -278,8 +293,8 @@ phonecatControllers.controller('rootCtrl', function ($scope, $http, $modal) {
 
     };
 });
-/*
-phonecatControllers.controller('loginCtrl', function ($scope, $modalInstance, $http, $window) {
+
+phonecatControllers.controller('loginCtrl', function ($scope, $modalInstance, $http, $window, sessionService) {
     $scope.account = {
         username: null,
         password: null
@@ -290,13 +305,15 @@ phonecatControllers.controller('loginCtrl', function ($scope, $modalInstance, $h
 
     $scope.submit = function () {
         $scope.submitting = true;
-        $http({
+       $http({
             method: 'POST',
-            url: '/api/accout/',
-            data: $scope.account
+            url: '/login',
+            data: "username=" + $scope.account.username +
+            "&password=" + $scope.account.password,
+           headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function (data) {
             $scope.submitting = false;
-            $window.alert("Авторизация успешно завершина! \n Добро пожаловать: "+data.username);
+            $window.alert("Авторизация успешно завершина! \n Добро пожаловать: "+$scope.account.username);
             $modalInstance.close(data);
         }).error(function (data, status) {
             $scope.submitting = false;
@@ -306,9 +323,11 @@ phonecatControllers.controller('loginCtrl', function ($scope, $modalInstance, $h
                 $scope.badRequest = 'Пользователь не найден!';
             else if (status === 422)
                 $scope.badRequest = 'Неверный пароль!';
+            else if (status === 401)
+                $scope.badRequest = 'Неверный логин и пароль!';
         });
     };
-});*/
+});
 
 phonecatControllers.controller('addNewVisaCtrl', function ($scope, $modalInstance, $http, $window) {
 

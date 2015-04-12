@@ -6,7 +6,6 @@ import MVC.persistence.repositories.PhoneRepository;
 import MVC.persistence.repositories.VisaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
