@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="en" ng-app="phonecatApp">
+<html lang="en" ng-app="RootApp" ng-controller="AppCtrl">
 <head>
     <meta charset="utf-8">
-    <title>Интернет магазин</title>
+    <title ng-bind="pageTitle"></title>
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="css/animations.css">
@@ -10,17 +10,15 @@
     <script src="bower_components/jquery/dist/jquery-1.11.2.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/angular/angular.js"></script>
-   <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.min.js"></script>
 
 
     <script src="js/app.js"></script>
-    <script src="js/animations.js"></script>
-    <script src="js/controllers.js"></script>
-    <script src="js/filters.js"></script>
+    <script src="js/phones.js"></script>
+    <script src="js/account.js"></script>
 
 
 </head>
@@ -28,30 +26,31 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <ul class="nav navbar-nav">
-            <li class="bottom-right"><a href="#/phones">Главная</a></li>
+
             <form class="navbar-form navbar-left" role="search">
+                <a class="btn btn-large btn-default" ui-sref="phones">Главная</a>
                 <input ng-model="query" class="form-control" placeholder="Найти...">
             </form>
         </ul>
-        <ul class="nav navbar-nav navbar-right"  ng-controller="rootCtrl">
+        <ul class="nav navbar-nav navbar-right" ng-controller="LoginCtrl">
             <li class="bottom-right"><a class="test-right" ng-show="isLoggedIn()" ><span style="color: #eea236" ng-bind="username"></span></a></li>
             <form class="navbar-form navbar-left">
-                <div ng-hide="isLoggedIn()">
-                    <button type="button" class="btn btn-default bg-info" data-ng-click="login()">Вход</button>
-                    <button type="button" class="btn btn-primary bg-info" data-ng-click="register()">Регистрация </button>
+                <div class="btn-group" ng-hide="isLoggedIn()">
+                    <a ng-click="login()" class="btn btn-large  btn-success">Вход</a>
+                    <a ng-click="register()" class="btn btn-large btn-default">Регистрация </a>
                 </div>
-                <div ng-show="isLoggedIn()">
-                    <button  type="button" class="btn btn-default bg-info" data-ng-click="addVisa()">Добавить карту </button>
-                    <button type="button" class="btn btn-default bg-info" data-ng-click="logout()">Выход</button>
+                <div class="btn-group" ng-show="isLoggedIn()">
+                    <a class="btn btn-large btn-default" ng-click="addVisa()">Добавить карту </a>
+                    <a ng-click="logout()" class="btn btn-large  btn-default ">Выход</a>
                 </div>
             </form>
         </ul>
     </div>
 </nav>
 
-<div class="container">
-    <div ng-view class="view-frame"></div>
-</div>
+
+<div class="container" ng-view="main"></div>
+
 
 <footer class="footer">
 </footer>

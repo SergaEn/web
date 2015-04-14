@@ -1,13 +1,10 @@
 package MVC.api;
 
-import MVC.persistence.entities.Account;
 import MVC.persistence.entities.Phone;
-
 import MVC.persistence.entities.Visa;
 import MVC.persistence.repositories.AccountRepository;
 import MVC.persistence.repositories.PhoneRepository;
 import MVC.persistence.repositories.VisaRepository;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +34,7 @@ public class VisaController {
     @Autowired
     private AccountRepository accountRepository;
 
-    @RequestMapping(value = "/api/payToVisa/{id:\\d+}", method = POST)
+    @RequestMapping(value = "/api/buyPhone/{id:\\d+}", method = POST)
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Phone> buyVisa(final @PathVariable Integer id, final @RequestBody Visa buyVisa, final BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
