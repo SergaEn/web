@@ -3,7 +3,6 @@ angular.module('phonecatApp', [
     'ngRoute',
     'phonecatAnimations',
     'phonecatControllers',
-    'phonecatFilters',
     'ui.bootstrap'
 
 

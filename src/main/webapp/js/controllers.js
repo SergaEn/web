@@ -335,7 +335,7 @@ phonecatControllers.controller('addNewVisaCtrl', function ($scope, $modalInstanc
         firstName: null,
         lastName: null,
         cartName: null,
-        expirationDate: new Date(),
+        expirationDate: null,
         cvv: null,
         cartNumber: null,
         summ: null
