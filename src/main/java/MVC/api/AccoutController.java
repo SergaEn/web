@@ -1,6 +1,7 @@
 package MVC.api;
 
 import MVC.persistence.entities.Account;
+import MVC.persistence.entities.UserRole;
 import MVC.persistence.repositories.AccountRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ public class AccoutController {
 
     @Autowired
     AccountRepository accountRepository;
+
     @Transactional(readOnly = true)
     @RequestMapping(value = "/api/accout/", method = POST)
     public ResponseEntity<Account> login(final @RequestBody Account account, final BindingResult bindingResult) {
@@ -56,8 +58,10 @@ public class AccoutController {
 
         if (account.getUsername().length() > 1 && account.getPassword().length() > 4) {
             account.setPassword(encoder.encodePassword(account.getPassword(), null));
-            account.setGrantedAuthority("ROLE_USER");
-            accountRepository.save(account);
+            UserRole role = new UserRole();
+            role.setAccount(account);
+            role.setRole("USER");
+            accountRepository.saveAndFlush(account);
             return new ResponseEntity<Account>(account, HttpStatus.OK);
         }
 

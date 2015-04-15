@@ -2,7 +2,6 @@ package MVC.api;
 
 import MVC.persistence.entities.Phone;
 import MVC.persistence.entities.Visa;
-import MVC.persistence.repositories.AccountRepository;
 import MVC.persistence.repositories.PhoneRepository;
 import MVC.persistence.repositories.VisaRepository;
 import org.apache.commons.lang3.time.DateUtils;
@@ -32,11 +31,10 @@ public class VisaController {
     private VisaRepository visaRepository;
     @Autowired
     private PhoneRepository phoneRepository;
-    @Autowired
-    private AccountRepository accountRepository;
+
 
     @RequestMapping(value = "/api/buyPhone/{id:\\d+}", method = POST)
-    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Phone> buyVisa(final @PathVariable Integer id, final @RequestBody Visa buyVisa, final BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new IllegalArgumentException("Invalid arguments.");

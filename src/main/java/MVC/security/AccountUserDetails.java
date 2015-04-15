@@ -1,11 +1,12 @@
 package MVC.security;
 
 import MVC.persistence.entities.Account;
+import MVC.persistence.entities.UserRole;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 
 
 public class AccountUserDetails implements UserDetails {
@@ -15,17 +16,19 @@ public class AccountUserDetails implements UserDetails {
         this.account = account;
     }
 
+    private List<GrantedAuthority> buildUserAuthority(Set<UserRole> userRoles) {
+        Set<GrantedAuthority> setAuths = new HashSet<GrantedAuthority>();
+        for (UserRole userRole : userRoles) {
+            setAuths.add(new SimpleGrantedAuthority(userRole.getRole()));
+        }
+        List<GrantedAuthority> result = new ArrayList<GrantedAuthority>(setAuths);
+
+        return result;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        GrantedAuthority authority = new GrantedAuthority() {
-            @Override
-            public String getAuthority() {
-                return "ROLE_USER";
-            }
-        };
-
-        ArrayList<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        authorities.add(authority);
+        List<GrantedAuthority> authorities = buildUserAuthority(account.getUserRole());
         return authorities;
     }
 
