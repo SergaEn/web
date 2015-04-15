@@ -1,13 +1,11 @@
 package MVC.api;
 
-import MVC.persistence.entities.Account;
 import MVC.persistence.entities.Phone;
-
 import MVC.persistence.entities.Visa;
 import MVC.persistence.repositories.AccountRepository;
 import MVC.persistence.repositories.PhoneRepository;
 import MVC.persistence.repositories.VisaRepository;
-
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -55,7 +53,7 @@ public class VisaController {
         if (visa.getFirstName().equals(buyVisa.getFirstName())
                 && visa.getLastName().equals(buyVisa.getLastName())
                 && visa.getCartName().equals(buyVisa.getCartName())
-                //&& ((GregorianCalendar) visa.getExpirationDate()).toZonedDateTime().getDayOfYear() == (((GregorianCalendar) buyVisa.getExpirationDate()).toZonedDateTime().getDayOfYear())
+                && DateUtils.isSameDay(visa.getExpirationDate(), buyVisa.getExpirationDate())
                 && visa.getCvv().equals(buyVisa.getCvv())) {
 
             log.info("Проверка карты " + visa.toString() + " прошла успешно");
