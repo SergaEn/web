@@ -1,7 +1,7 @@
 <div class="container" >
     <div class="row">
-        <ul class="phones">
-            <li ng-repeat="phone in phones | filter:query "
+        <ul>
+            <li ng-repeat="phone in phones | filter:query  "
                 class="thumbnail phone-listing col-md-12 col-xs-12" ng-click="toggleActive(phone)" ng-show="phone.count"
                 ng-class="{active:phone.active}">
 
@@ -29,10 +29,8 @@
 
     </div>
     <div ng-show="flagVisible">
-        <!-- Подсчет общей стоимости всех выбранных услуг. Выводится по заданному формату валюты. -->
         <p class="text-center"><b><span
                 style="color: green">Всего заказано на сумму:<span>{{total() | currency}}  </span> </span> </b>
-            <button type="button" class=" btn btn-primary" data-ng-click="openNewDlg(total(),phone);">Купить</button>
         </p>
     </div>
 </div>

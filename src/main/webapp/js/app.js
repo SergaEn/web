@@ -2,6 +2,7 @@ angular.module('RootApp', [
     'ui.router',
     'account',
     'phones',
+    'phoneAnimations',
     'ui.bootstrap'
 
 

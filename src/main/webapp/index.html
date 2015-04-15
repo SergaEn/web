@@ -5,7 +5,6 @@
     <title ng-bind="pageTitle"></title>
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/app.css">
-    <link rel="stylesheet" href="css/animations.css">
 
     <script src="bower_components/jquery/dist/jquery-1.11.2.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -14,11 +13,13 @@
     <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
 
-
+<
     <script src="js/app.js"></script>
     <script src="js/phones.js"></script>
     <script src="js/account.js"></script>
+    <script src="js/animations.js"></script>
 
 
 </head>
@@ -49,7 +50,7 @@
 </nav>
 
 
-<div class="container" ng-view="main"></div>
+<div class="container" ui-view="main"></div>
 
 
 <footer class="footer">

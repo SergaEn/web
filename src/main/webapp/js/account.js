@@ -1,48 +1,16 @@
 angular.module('account', ['ui.router', 'ngResource'])
-    /* .config(function($stateProvider) {
-     $stateProvider.state('login', {
-     url:'/login',
-     views: {
-     'main': {
-     templateUrl:'/partials/login.html',
-     controller: 'LoginCtrl'
-     }
-     }
-     })
-     .state('register', {
-     url:'/register',
-     views: {
-     'main': {
-     templateUrl:'/partials/register.html',
-     controller: 'RegisterCtrl'
-     }
-     }
-     }
-     )
-     .state('visa', {
-     url:'/visa',
-     views: {
-     'main': {
-     templateUrl:'/partials/addVisa.html',
-     controller: 'AddNewVisaCtrl'
-     }
-     }
-     }
-     )
 
-     ;
-     })*/
     .factory('sessionService', function ($http) {
         var session = {};
         session.login = function (data) {
             return $http.post("/login", "username=" + data.username +
             "&password=" + data.password, {
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            }).then(function (data) {
-                alert("login successful");
+            }).success(function (success) {
                 localStorage.setItem("session", {});
-            }, function (data) {
-                alert("error logging in");
+                alert("Регистрация успешно завершина! \n Добро пожаловать - " + data.username);
+            }).error(function (data, status) {
+
             });
         };
         session.logout = function () {
@@ -59,21 +27,11 @@ angular.module('account', ['ui.router', 'ngResource'])
         $scope.isLoggedIn = sessionService.isLoggedIn;
         $scope.logout = sessionService.logout;
         $scope.login = function () {
-            var modalInstance = $modal.open({
+            $modal.open({
                 templateUrl: '/partials/login.html',
                 controller: 'LoginModelCtrl',
                 scope: $scope
-
             });
-
-            modalInstance.result.then(
-                function (account) {
-                    localStorage.setItem("session", {});
-                    $state.go("phones");
-                },
-                function () {
-                }
-            );
         };
 
         $scope.addVisa = function () {
@@ -83,36 +41,23 @@ angular.module('account', ['ui.router', 'ngResource'])
                 scope: $scope
             });
         };
-
         $scope.register = function () {
-            var modalInstance = $modal.open({
+            $modal.open({
                 templateUrl: '/partials/register.html',
                 controller: 'RegisterCtrl',
                 scope: $scope
-
             });
-
-            modalInstance.result.then(
-                function (account) {
-                    localStorage.setItem("session", {});
-                },
-                function () {
-                }
-            );
-
         };
     })
 
-    .controller('RegisterCtrl', function ($scope, $modalInstance, $http, $window) {
+    .controller('RegisterCtrl', function ($scope, $modalInstance, $http, sessionService) {
         $scope.account = {
             username: null,
             password: null
         };
-
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
-
         $scope.submit = function () {
             $scope.submitting = true;
             $http({
@@ -120,8 +65,8 @@ angular.module('account', ['ui.router', 'ngResource'])
                 url: '/api/register/',
                 data: $scope.account
             }).success(function (data) {
+                sessionService.login($scope.account);
                 $scope.submitting = false;
-                $window.alert("Регистрация успешно завершина! \n Добро пожаловать - " + $scope.account.username);
                 $modalInstance.close(data);
             }).error(function (data, status) {
                 $scope.submitting = false;
@@ -131,12 +76,11 @@ angular.module('account', ['ui.router', 'ngResource'])
                     $scope.badRequest = 'Имя: ' + $scope.account.username + ' уже занято!';
                 else if (status === 422)
                     $scope.badRequest = 'Слишком мало символов....';
-
             });
         };
     })
 
-    .controller('LoginModelCtrl', function ($scope, $modalInstance, $http, $window) {
+    .controller('LoginModelCtrl', function ($scope, $modalInstance, sessionService) {
         $scope.account = {
             username: null,
             password: null
@@ -147,26 +91,20 @@ angular.module('account', ['ui.router', 'ngResource'])
 
         $scope.submit = function () {
             $scope.submitting = true;
-            $http({
-                method: 'POST',
-                url: '/login',
-                data: "username=" + $scope.account.username +
-                "&password=" + $scope.account.password,
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            }).success(function (data) {
+            sessionService.login($scope.account)
+            .success(function (data) {
                 $scope.submitting = false;
-                $window.alert("Авторизация успешно завершина! \n Добро пожаловать: " + $scope.account.username);
                 $modalInstance.close(data);
             }).error(function (data, status) {
-                $scope.submitting = false;
-                if (status === 400)
-                    $scope.badRequest = "Что-то пошло не так....";
-                else if (status === 409)
-                    $scope.badRequest = 'Пользователь не найден!';
-                else if (status === 422)
-                    $scope.badRequest = 'Неверный пароль!';
-                else if (status === 401)
-                    $scope.badRequest = 'Неверный логин и пароль!';
+                    $scope.submitting = false;
+                    if (status === 400)
+                        $scope.badRequest = "Что-то пошло не так....";
+                    else if (status === 409)
+                        $scope.badRequest = 'Пользователь не найден!';
+                    else if (status === 422)
+                        $scope.badRequest = 'Неверный пароль!';
+                    else if (status === 401)
+                        $scope.badRequest = 'Неверный логин и пароль!';
             });
         };
     })

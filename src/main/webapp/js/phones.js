@@ -33,7 +33,6 @@ angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap'])
             });
     })
 
-
     .factory('phoneService', function ($resource) {
         var service = {};
 
@@ -50,12 +49,8 @@ angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap'])
 
         return service;
     })
-
-
     .controller('PhoneListCtrl', function ($scope, $modal, phones, phoneService) {
-        console.log(phoneService.getAllPhones());
         $scope.phones = phones;
-        console.log($scope.phones);
 
         $scope.openNewBuyDlg = function (phone) {
             var modalInstance = $modal.open({
@@ -124,11 +119,10 @@ angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap'])
     })
     .controller('PhoneDetailCtrl', function ($scope, $modal, phone) {
         console.log(phone);
-        $scope.mainImageUrl = phone.images[0];
         $scope.phone = phone;
 
 
-        $scope.setImage = function (imageUrl) {
+      $scope.setImage = function (imageUrl) {
             $scope.mainImageUrl = imageUrl;
         }
 
@@ -153,7 +147,6 @@ angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap'])
             );
         };
     })
-
     .controller('NewBuyPhoneCtrl', function ($scope, $modalInstance, $http, phone, $window) {
 
         console.log(phone);
@@ -206,59 +199,5 @@ angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap'])
             });
         };
     })
-
-    .controller('AddNewCtrl', function ($scope, $modalInstance, $http, phone, $window, total) {
-
-        console.log(phone);
-        $scope.visa = {
-            firstName: 'Sergei',
-            lastName: 'En',
-            cartName: 'visa',
-            cartNumber: 123456789,
-            expirationDate: '2015-05-20',
-            cvv: 999,
-            summ: total
-        };
-
-        $scope.boughtOnOptions = {
-            'year-format': "'yyyy'",
-            'starting-day': 1,
-            open: false
-        };
-
-        $scope.openBoughtOn = function ($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-            $scope.boughtOnOptions.open = true;
-        };
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        };
-
-        $scope.submit = function () {
-            $scope.submitting = true;
-            $http({
-                method: 'POST',
-                url: '/api/payToVisa/' + phone.id + '',
-                data: $scope.visa
-            }).success(function (data) {
-                $scope.submitting = false;
-                $window.alert("Покупка произведена успешно!");
-                $modalInstance.close(data);
-            }).error(function (data, status) {
-                $scope.submitting = false;
-                if (status === 400)
-                    $scope.badRequest = data;
-                else if (status === 409)
-                    $scope.badRequest = 'Карта не найдена!';
-                else if (status === 422)
-                    $scope.badRequest = 'Недостаточно средств на карте!';
-
-
-            });
-        };
-    })
-
 
 ;
