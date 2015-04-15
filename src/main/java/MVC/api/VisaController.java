@@ -1,6 +1,8 @@
 package MVC.api;
 
+import MVC.persistence.entities.Account;
 import MVC.persistence.entities.Phone;
+
 import MVC.persistence.entities.Visa;
 import MVC.persistence.repositories.AccountRepository;
 import MVC.persistence.repositories.PhoneRepository;
