@@ -1,8 +1,6 @@
 package MVC.api;
 
-import MVC.persistence.entities.Account;
 import MVC.persistence.entities.Phone;
-
 import MVC.persistence.entities.Visa;
 import MVC.persistence.repositories.AccountRepository;
 import MVC.persistence.repositories.PhoneRepository;
@@ -37,12 +35,21 @@ public class VisaController {
     @Autowired
     private AccountRepository accountRepository;
 
-    @RequestMapping(value = "/api/payToVisa/{id:\\d+}", method = POST)
-    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "/api/buyPhone/{id:\\d+}", method = POST)
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity<Phone> buyVisa(final @PathVariable Integer id, final @RequestBody Visa buyVisa, final BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new IllegalArgumentException("Invalid arguments.");
         }
+
+    /*   Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal instanceof UserDetails) {
+            UserDetails details = (UserDetails) principal;
+            Account loggedIn = accountRepository.findByUsername(details.getUsername());
+            log.info(loggedIn.toString());
+            if (loggedIn==null) return new ResponseEntity<Phone>(HttpStatus.UNAUTHORIZED);
+        }else{new ResponseEntity<Phone>(HttpStatus.UNAUTHORIZED);}*/
+
         log.info(buyVisa.toString());
         ResponseEntity<Phone> rv;
         Visa visa = visaRepository.findVisaCartNumber(buyVisa.getCartNumber());

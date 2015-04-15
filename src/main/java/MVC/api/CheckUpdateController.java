@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by en on 15.04.2015.
@@ -14,7 +13,7 @@ import java.util.List;
 @Service
 public class CheckUpdateController {
 
-   @Scheduled(fixedDelay=10000)
+   @Scheduled(fixedDelay=60000)
     private void chechphones() {
         RestTemplate restTemplate = new RestTemplate();
         Phone[] phones = restTemplate.getForObject("http://localhost:8080/api/phones/", Phone[].class);

@@ -68,7 +68,6 @@ angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap'])
                 function (newPhone) {
                     console.log(phone)
                     phone.count = newPhone.count;
-                    //  $state.go("phones");
                 },
                 function () {
                 }
@@ -76,21 +75,6 @@ angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap'])
         };
 
 
-        $scope.openNewDlg = function (total) {
-            var modalInstance = $modal.open({
-                templateUrl: '/partials/newBuy.html',
-                controller: 'AddNewCtrl',
-                scope: $scope,
-                resolve: {
-                    phone: function () {
-                        return $scope.phones[1];
-                    },
-                    total: function () {
-                        return total;
-                    }
-                }
-            });
-        };
 
         $scope.flagVisible = false;
         /* $scope.toCart = function() {

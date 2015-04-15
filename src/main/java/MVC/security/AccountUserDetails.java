@@ -4,7 +4,6 @@ import MVC.persistence.entities.Account;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -21,7 +20,7 @@ public class AccountUserDetails implements UserDetails {
         GrantedAuthority authority = new GrantedAuthority() {
             @Override
             public String getAuthority() {
-                return "USER";
+                return "ROLE_USER";
             }
         };
 

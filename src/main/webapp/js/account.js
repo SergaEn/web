@@ -115,7 +115,7 @@ angular.module('account', ['ui.router', 'ngResource'])
             firstName: null,
             lastName: null,
             cartName: null,
-            expirationDate: new Date(),
+            expirationDate: null,
             cvv: null,
             cartNumber: null,
             summ: null

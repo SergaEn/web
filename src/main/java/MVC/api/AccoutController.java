@@ -1,5 +1,7 @@
 package MVC.api;
 
+import MVC.persistence.entities.Account;
+import MVC.persistence.repositories.AccountRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,10 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import MVC.persistence.entities.Account;
-import MVC.persistence.repositories.AccountRepository;
 import org.springframework.web.bind.annotation.RestController;
+
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
@@ -56,6 +56,7 @@ public class AccoutController {
 
         if (account.getUsername().length() > 1 && account.getPassword().length() > 4) {
             account.setPassword(encoder.encodePassword(account.getPassword(), null));
+            account.setGrantedAuthority("ROLE_USER");
             accountRepository.save(account);
             return new ResponseEntity<Account>(account, HttpStatus.OK);
         }
