@@ -1,4 +1,3 @@
-
 angular.module('RootApp', [
     'ui.router',
     'account',

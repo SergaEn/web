@@ -34,7 +34,7 @@ public class VisaController {
 
 
     @RequestMapping(value = "/api/buyPhone/{id:\\d+}", method = POST)
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<Phone> buyVisa(final @PathVariable Integer id, final @RequestBody Visa buyVisa, final BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new IllegalArgumentException("Invalid arguments.");

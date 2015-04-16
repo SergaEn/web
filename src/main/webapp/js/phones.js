@@ -75,7 +75,6 @@ angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap'])
         };
 
 
-
         $scope.flagVisible = false;
         /* $scope.toCart = function() {
          $scope.flagVisible = !$scope.flagVisible;
@@ -106,7 +105,7 @@ angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap'])
         $scope.phone = phone;
 
 
-      $scope.setImage = function (imageUrl) {
+        $scope.setImage = function (imageUrl) {
             $scope.mainImageUrl = imageUrl;
         }
 

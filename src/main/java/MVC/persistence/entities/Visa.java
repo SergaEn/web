@@ -1,8 +1,10 @@
 package MVC.persistence.entities;
 
 
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Calendar;
 
 
@@ -10,27 +12,15 @@ import java.util.Calendar;
  * Created by varArg on 31.03.2015.
  */
 @Entity
-@Table(name = "visa")
+@Table(name = "visas")
 
-public class Visa implements Serializable {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Visa extends MappedModel {
 
 
     private String firstName;
-
-
     private String lastName;
-
-
     private String cartName;
-
-
     private String cartNumber;
-
-
     private Integer cvv;
 
     @Temporal(TemporalType.DATE)
@@ -74,9 +64,6 @@ public class Visa implements Serializable {
         this.summ = summ;
     }
 
-    public Integer getId() {
-        return id;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -104,10 +91,6 @@ public class Visa implements Serializable {
 
     public Double getSumm() {
         return summ;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public void setFirstName(String firstName) {

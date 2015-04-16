@@ -2,24 +2,23 @@ package MVC.persistence.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import javax.persistence.*;
-import java.io.Serializable;
+
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.List;
 
 /**
  * Created by varArg on 31.03.2015.
  */
 @Entity
-@Table(name = "phone")
+@Table(name = "phones")
 @JsonIgnoreProperties
-public class Phone implements Serializable {
+public class Phone extends MappedModel {
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
     private String name;
     private Integer count;
+
     @ElementCollection
     private List<String> images;
     private String description;
@@ -37,9 +36,6 @@ public class Phone implements Serializable {
         this.cost = cost;
     }
 
-    public Integer getId() {
-        return id;
-    }
 
     public String getName() {
         return name;
@@ -70,10 +66,6 @@ public class Phone implements Serializable {
 
     public Double getCost() {
         return cost;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public void setName(String name) {

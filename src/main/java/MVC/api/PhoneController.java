@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -18,7 +19,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 public class PhoneController {
     private static final Logger log = Logger.getLogger(PhoneController.class);
     @Autowired
-    PhoneRepository phoneRepository;
+    private PhoneRepository phoneRepository;
 
     @RequestMapping(value = "/api/phones/{id:\\d+}", method = GET)
    /* @PreAuthorize("isAuthenticated()")*/

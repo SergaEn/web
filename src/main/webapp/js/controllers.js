@@ -1,23 +1,22 @@
-
 var phonecatControllers = angular.module('phonecatControllers', [])
 
-    .factory('sessionService', function($http) {
+    .factory('sessionService', function ($http) {
         var session = {};
-        session.login = function(data) {
+        session.login = function (data) {
             return $http.post("/login", "username=" + data.username +
             "&password=" + data.password, {
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            } ).then(function(data) {
+            }).then(function (data) {
                 alert("login successful");
                 localStorage.setItem("session", {});
-            }, function(data) {
+            }, function (data) {
                 alert("error logging in");
             });
         };
-        session.logout = function() {
+        session.logout = function () {
             localStorage.removeItem("session");
         };
-        session.isLoggedIn = function() {
+        session.isLoggedIn = function () {
             return localStorage.getItem("session") !== null;
         };
         return session;
@@ -246,11 +245,11 @@ phonecatControllers.controller('AddNewCtrl', function ($scope, $modalInstance, $
 });
 
 
-phonecatControllers.controller('rootCtrl', function ($scope, $http, $modal,sessionService) {
+phonecatControllers.controller('rootCtrl', function ($scope, $http, $modal, sessionService) {
     $scope.isLoggedIn = sessionService.isLoggedIn;
     $scope.logout = sessionService.logout;
 
-   $scope.login = function () {
+    $scope.login = function () {
         var modalInstance = $modal.open({
             templateUrl: '/partials/login.html',
             controller: 'loginCtrl',
@@ -258,7 +257,7 @@ phonecatControllers.controller('rootCtrl', function ($scope, $http, $modal,sessi
 
         });
 
-       modalInstance.result.then(
+        modalInstance.result.then(
             function (account) {
                 localStorage.setItem("session", {});
             },
@@ -305,15 +304,15 @@ phonecatControllers.controller('loginCtrl', function ($scope, $modalInstance, $h
 
     $scope.submit = function () {
         $scope.submitting = true;
-       $http({
+        $http({
             method: 'POST',
             url: '/login',
             data: "username=" + $scope.account.username +
             "&password=" + $scope.account.password,
-           headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function (data) {
             $scope.submitting = false;
-            $window.alert("Авторизация успешно завершина! \n Добро пожаловать: "+$scope.account.username);
+            $window.alert("Авторизация успешно завершина! \n Добро пожаловать: " + $scope.account.username);
             $modalInstance.close(data);
         }).error(function (data, status) {
             $scope.submitting = false;
@@ -374,7 +373,7 @@ phonecatControllers.controller('addNewVisaCtrl', function ($scope, $modalInstanc
             if (status === 400)
                 $scope.badRequest = "Что-то пошло не так....";
             else if (status === 409)
-                $scope.badRequest = 'Карта с таким номером: '+$scope.visa.cartNumber+' уже существует!';
+                $scope.badRequest = 'Карта с таким номером: ' + $scope.visa.cartNumber + ' уже существует!';
             else if (status === 422)
                 $scope.badRequest = 'Не все поля заполенены!';
         });
@@ -399,14 +398,14 @@ phonecatControllers.controller('registerCtrl', function ($scope, $modalInstance,
             data: $scope.account
         }).success(function (data) {
             $scope.submitting = false;
-            $window.alert("Регистрация успешно завершина! \n Добро пожаловать - "+$scope.account.username);
+            $window.alert("Регистрация успешно завершина! \n Добро пожаловать - " + $scope.account.username);
             $modalInstance.close(data);
         }).error(function (data, status) {
             $scope.submitting = false;
             if (status === 400)
                 $scope.badRequest = "Что-то пошло не так....";
             else if (status === 409)
-                $scope.badRequest = 'Имя: '+$scope.account.username+' уже занято!';
+                $scope.badRequest = 'Имя: ' + $scope.account.username + ' уже занято!';
             else if (status === 422)
                 $scope.badRequest = 'Слишком мало символов....';
 

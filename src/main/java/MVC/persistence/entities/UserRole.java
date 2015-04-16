@@ -3,47 +3,35 @@ package MVC.persistence.entities;
 
 import javax.persistence.*;
 
-@Entity
-public class UserRole {
 
-    private Integer id;
+@Entity
+@Table(name = "roles")
+public class UserRole extends MappedModel {
+
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id", nullable = false)
-    private Account user;
+    @JoinColumn(name = "account_id")
+    private Account account;
 
+    @Column(name = "role", nullable = false, length = 45)
     private String role;
 
     public UserRole() {
     }
 
-    public UserRole(Account user, String role) {
-        this.user = user;
+    public UserRole(Account account, String role) {
+        this.account = account;
         this.role = role;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "role_id",
-            unique = true, nullable = false)
-    public Integer getId() {
-        return this.id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-
     public Account getAccount() {
-        return this.user;
+        return this.account;
     }
 
     public void setAccount(Account user) {
-        this.user = user;
+        this.account = user;
     }
 
-    @Column(name = "role", nullable = false, length = 45)
     public String getRole() {
         return this.role;
     }

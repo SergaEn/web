@@ -4,7 +4,7 @@ body {
     padding-top: 90px;
     padding-bottom: 30px;
     background-repeat: repeat;
-   /* background-color: #222020;*/
+    /* background-color: #222020;*/
 }
 
 .phone-images {
@@ -126,13 +126,13 @@ div.total span {
 }
 
 .modal-dialog {
-    max-width:400px;
+    max-width: 400px;
 }
 
-label.col-sm-4.control-label{
+label.col-sm-4.control-label {
     text-align: left;
 }
 
-.mycss{
+.mycss {
     text-align: center;
 }

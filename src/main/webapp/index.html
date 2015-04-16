@@ -34,7 +34,9 @@
             </form>
         </ul>
         <ul class="nav navbar-nav navbar-right" ng-controller="LoginCtrl">
-            <li class="bottom-right"><a class="test-right" ng-show="isLoggedIn()" ><span style="color: #eea236" ng-bind="username"></span></a></li>
+            <li class="bottom-right"><a class="test-right" ng-show="isLoggedIn()"><span style="color: #eea236"
+                                                                                        ng-bind="username"></span></a>
+            </li>
             <form class="navbar-form navbar-left">
                 <div class="btn-group" ng-hide="isLoggedIn()">
                     <a ng-click="login()" class="btn btn-large  btn-success">Вход</a>

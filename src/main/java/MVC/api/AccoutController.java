@@ -3,6 +3,7 @@ package MVC.api;
 import MVC.persistence.entities.Account;
 import MVC.persistence.entities.UserRole;
 import MVC.persistence.repositories.AccountRepository;
+import MVC.persistence.repositories.RoleRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,10 @@ public class AccoutController {
     private final Logger log = Logger.getLogger(AccoutController.class);
 
     @Autowired
-    AccountRepository accountRepository;
+    private AccountRepository accountRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Transactional(readOnly = true)
     @RequestMapping(value = "/api/accout/", method = POST)
@@ -58,10 +62,11 @@ public class AccoutController {
 
         if (account.getUsername().length() > 1 && account.getPassword().length() > 4) {
             account.setPassword(encoder.encodePassword(account.getPassword(), null));
-            UserRole role = new UserRole();
-            role.setAccount(account);
-            role.setRole("USER");
-            accountRepository.saveAndFlush(account);
+
+            UserRole role = new UserRole(account, "USER");
+            accountRepository.save(account);
+            roleRepository.save(role);
+
             return new ResponseEntity<Account>(account, HttpStatus.OK);
         }
 

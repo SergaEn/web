@@ -92,10 +92,10 @@ angular.module('account', ['ui.router', 'ngResource'])
         $scope.submit = function () {
             $scope.submitting = true;
             sessionService.login($scope.account)
-            .success(function (data) {
-                $scope.submitting = false;
-                $modalInstance.close(data);
-            }).error(function (data, status) {
+                .success(function (data) {
+                    $scope.submitting = false;
+                    $modalInstance.close(data);
+                }).error(function (data, status) {
                     $scope.submitting = false;
                     if (status === 400)
                         $scope.badRequest = "Что-то пошло не так....";
@@ -105,7 +105,7 @@ angular.module('account', ['ui.router', 'ngResource'])
                         $scope.badRequest = 'Неверный пароль!';
                     else if (status === 401)
                         $scope.badRequest = 'Неверный логин и пароль!';
-            });
+                });
         };
     })
 

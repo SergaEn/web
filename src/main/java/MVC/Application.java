@@ -11,7 +11,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 
-
 @SpringBootApplication
 @PropertySource("classpath:application.properties")
 public class Application extends SpringBootServletInitializer {
