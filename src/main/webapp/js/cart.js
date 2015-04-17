@@ -1,4 +1,4 @@
-angular.module('cartForm', ['ui.router', 'ngResource', 'phones'])
+angular.module('cartForm', ['ui.router', 'ngResource', 'phones', 'account'])
 
     .config(function config($stateProvider) {
         $stateProvider.state('cartFrom', {
@@ -10,12 +10,27 @@ angular.module('cartForm', ['ui.router', 'ngResource', 'phones'])
                 }
             },
             resolve: {
-                phones: function (cartService) {
-                    return cartService.getAllPhonesToCart();
+                account: function (accountService, $stateParams) {
+                    return accountService.getAccountById($stateParams.accountId);
                 }
             },
             data: {pageTitle: 'Корзина'}
         })
+            .state('manageCart', {
+                url: '/manage/cart?accountId',
+                views: {
+                    'main': {
+                        templateUrl: 'partials/cart.html',
+                        controller: 'CartCtrl'
+                    }
+                },
+                resolve: {
+                    account: function (accountService, $stateParams) {
+                        return accountService.getAccountById($stateParams.accountId);
+                    }
+                },
+                data: {pageTitle: "Cart"}
+            });
     })
 
     .factory('cartService', function ($resource) {
@@ -49,7 +64,8 @@ angular.module('cartForm', ['ui.router', 'ngResource', 'phones'])
     })
 
 
-    .controller('CartCtrl', function ($scope, phoneService, cartService) {
+    .controller('CartCtrl', function ($scope, phoneService, cartService, account, $state) {
+
         var phone = cartService.getAllPhonesToCart();
         if (phone) {
             phoneService.getAllPhonesToCart(phone)

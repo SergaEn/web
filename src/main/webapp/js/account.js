@@ -1,6 +1,6 @@
 angular.module('account', ['ui.router', 'ngResource'])
 
-    .factory('sessionService', function ($http) {
+    .factory('sessionService', function ($http, $state) {
         var session = {};
         session.login = function (data) {
             return $http.post("/login", "username=" + data.username +
@@ -8,6 +8,7 @@ angular.module('account', ['ui.router', 'ngResource'])
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).success(function (success) {
                 localStorage.setItem("session", {});
+
                 alert("Регистрация успешно завершина! \n Добро пожаловать - " + data.username);
             }).error(function (data, status) {
 
@@ -22,16 +23,55 @@ angular.module('account', ['ui.router', 'ngResource'])
         return session;
     })
 
+    .factory('accountService', function ($resource, $http) {
+        var service = {};
+        service.register = function (account, success, failure) {
+            var Account = $resource("/api/accounts");
+            Account.save({}, account, success, failure);
+        };
+        service.getAccountById = function (accountId) {
+            var Account = $resource("/api/accounts/:paramAccountId");
+            return Account.get({paramAccountId: accountId});
+        };
+        service.getAllAccounts = function () {
+            var Account = $resource("/api/accounts");
+            return Account.query();
+        };
 
-    .controller('LoginCtrl', function ($scope, $http, $modal, sessionService) {
+        service.getAuthorizedAccount = function () {
+            return $http.get("/api/authedaccounts").success(function (success) {
+            }).error(function (data, status) {
+            });
+        };
+
+        return service;
+    })
+
+
+    .controller('LoginCtrl', function ($scope, $http, $modal, sessionService, accountService) {
         $scope.isLoggedIn = sessionService.isLoggedIn;
         $scope.logout = sessionService.logout;
+
+
         $scope.login = function () {
-            $modal.open({
+
+            var modalInstance = $modal.open({
                 templateUrl: '/partials/login.html',
                 controller: 'LoginModelCtrl',
                 scope: $scope
             });
+
+            modalInstance.result.then(
+                function (account) {
+                    accountService.getAuthorizedAccount()
+                        .success(function (data) {
+                            $scope.username = data.username;
+                            $scope.account = data;
+                        });
+                },
+                function () {
+                }
+            );
         };
 
         $scope.addVisa = function () {
@@ -42,15 +82,31 @@ angular.module('account', ['ui.router', 'ngResource'])
             });
         };
         $scope.register = function () {
-            $modal.open({
+            accountService.getAuthorizedAccount()
+                .success(function (data) {
+                    $scope.username = data.username;
+                    $scope.account = data;
+                });
+            var modalInstance = $modal.open({
                 templateUrl: '/partials/register.html',
                 controller: 'RegisterCtrl',
                 scope: $scope
             });
+            modalInstance.result.then(
+                function (account) {
+                    accountService.getAuthorizedAccount()
+                        .success(function (data) {
+                            $scope.username = data.username;
+                            $scope.account = data;
+                        });
+                },
+                function () {
+                }
+            );
         };
     })
 
-    .controller('RegisterCtrl', function ($scope, $modalInstance, $http, sessionService) {
+    .controller('RegisterCtrl', function ($scope, $modalInstance, $http, sessionService, $state) {
         $scope.account = {
             username: null,
             password: null
@@ -68,6 +124,7 @@ angular.module('account', ['ui.router', 'ngResource'])
                 sessionService.login($scope.account);
                 $scope.submitting = false;
                 $modalInstance.close(data);
+                $state.go("phones", {reload: true});
             }).error(function (data, status) {
                 $scope.submitting = false;
                 if (status === 400)
@@ -80,7 +137,7 @@ angular.module('account', ['ui.router', 'ngResource'])
         };
     })
 
-    .controller('LoginModelCtrl', function ($scope, $modalInstance, sessionService) {
+    .controller('LoginModelCtrl', function ($scope, $modalInstance, sessionService, $state) {
         $scope.account = {
             username: null,
             password: null
@@ -95,6 +152,8 @@ angular.module('account', ['ui.router', 'ngResource'])
                 .success(function (data) {
                     $scope.submitting = false;
                     $modalInstance.close(data);
+
+                    $state.go("phones", {reload: true});
                 }).error(function (data, status) {
                     $scope.submitting = false;
                     if (status === 400)

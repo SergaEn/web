@@ -13,11 +13,19 @@ angular.module('RootApp', [
 
     })
 
-    .controller('AppCtrl', function AppCtrl($scope) {
+    .controller('AppCtrl', function AppCtrl($scope, accountService, $state) {
         $scope.$on('$stateChangeSuccess', function (event, toState) {
             if (angular.isDefined(toState.data.pageTitle)) {
                 $scope.pageTitle = toState.data.pageTitle;
             }
         });
+
+
+        accountService.getAuthorizedAccount()
+            .success(function (data) {
+                $scope.username = data.username;
+                $scope.account = data;
+            });
+
     })
 ;

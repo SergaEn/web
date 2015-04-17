@@ -38,6 +38,10 @@ public class Account extends MappedModel {
     Account() {
     }
 
+    public Account(String username) {
+        this.username = username;
+    }
+
     @Override
     public String toString() {
         return "Account{" +

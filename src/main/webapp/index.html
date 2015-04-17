@@ -47,7 +47,8 @@
                     <a ng-click="register()" class="btn btn-large btn-default">Регистрация </a>
                 </div>
                 <div class="btn-group" ng-show="isLoggedIn()">
-                    <a class="btn btn-large btn-success" ui-sref="cartFrom" data-toggle="tooltip" title="Корзина"><span
+                    <a class="btn btn-large btn-success" ui-sref="manageCart({accountId:account.id})"
+                       data-toggle="tooltip" title="Корзина"><span
                             class="glyphicon glyphicon-shopping-cart"></span></a>
                     <a class="btn btn-large btn-default" ng-click="addVisa()" data-toggle="tooltip"
                        title="Добавить карту оплаты"><span class="glyphicon glyphicon-credit-card"></span> Visa</a>
