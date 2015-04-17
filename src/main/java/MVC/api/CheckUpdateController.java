@@ -20,14 +20,14 @@ public class CheckUpdateController {
     @Autowired
     private PhoneRepository phoneRepository;
 
-    @Scheduled(fixedDelay = 60000)
+    @Scheduled(fixedDelay = 120000000)
     private void checkPhones() {
 
         RestTemplate restTemplate = new RestTemplate();
         Phone[] phones = restTemplate.getForObject("http://localhost:8080/api/phones/", Phone[].class);
 
         for (Phone phone : Arrays.asList(phones)) {
-            if (phone.getId() % 3 == 0) {
+            if (phone.getId() % 5 == 0) {
                 phone.setId(null);
             }
             phoneRepository.saveAndFlush(phone);

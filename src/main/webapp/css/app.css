@@ -136,3 +136,8 @@ label.col-sm-4.control-label {
 .mycss {
     text-align: center;
 }
+
+.td.thumbnail {
+    padding-left: 0px;
+    width: 100px;
+}

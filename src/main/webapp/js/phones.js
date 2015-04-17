@@ -1,4 +1,4 @@
-angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap'])
+angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap', 'cartForm'])
 
     .config(function config($stateProvider) {
         $stateProvider.state('phones', {
@@ -33,7 +33,7 @@ angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap'])
             });
     })
 
-    .factory('phoneService', function ($resource) {
+    .factory('phoneService', function ($resource, $http) {
         var service = {};
 
         service.getAllPhones = function () {
@@ -42,6 +42,16 @@ angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap'])
 
         };
 
+        service.getAllPhonesToCart = function (data) {
+            var arr = data.split(',');
+            return $http.post("/api/phones", arr).success(function (success) {
+
+            }).error(function (data, status) {
+                alert("bad " + data);
+            });
+        };
+
+
         service.getPhoneById = function (phoneId) {
             var Phone = $resource("/api/phones/:phoneId");
             return Phone.get({phoneId: phoneId});
@@ -49,7 +59,7 @@ angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap'])
 
         return service;
     })
-    .controller('PhoneListCtrl', function ($scope, $modal, phones, phoneService) {
+    .controller('PhoneListCtrl', function ($scope, $modal, phones, phoneService, cartService) {
         $scope.phones = phones;
 
         $scope.openNewBuyDlg = function (phone) {
@@ -76,11 +86,10 @@ angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap'])
 
 
         $scope.flagVisible = false;
-        /* $scope.toCart = function() {
-         $scope.flagVisible = !$scope.flagVisible;
-         $scope.addProduct = "Товар добавлен в корзину!"
-         };
-         */
+        $scope.toCart = function (data) {
+            cartService.toCart(data);
+        };
+
 
         $scope.toggleActive = function (s) {
             s.active = !s.active;
@@ -101,7 +110,6 @@ angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap'])
         };
     })
     .controller('PhoneDetailCtrl', function ($scope, $modal, phone) {
-        console.log(phone);
         $scope.phone = phone;
 
 

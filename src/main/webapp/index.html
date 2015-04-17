@@ -20,6 +20,8 @@
     <script src="js/phones.js"></script>
     <script src="js/account.js"></script>
     <script src="js/animations.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="bower_components/angular-local-storage.js"></script>
 
 
 </head>
@@ -29,7 +31,8 @@
         <ul class="nav navbar-nav">
 
             <form class="navbar-form navbar-left" role="search">
-                <a class="btn btn-large btn-default" ui-sref="phones">Главная</a>
+                <a class="btn btn-large  btn-info" ui-sref="phones" data-toggle="tooltip" title="Домой"> <span
+                        class="glyphicon glyphicon-home"></span></a>
                 <input ng-model="query" class="form-control" placeholder="Найти...">
             </form>
         </ul>
@@ -39,12 +42,17 @@
             </li>
             <form class="navbar-form navbar-left">
                 <div class="btn-group" ng-hide="isLoggedIn()">
-                    <a ng-click="login()" class="btn btn-large  btn-success">Вход</a>
+                    <a ng-click="login()" class="btn btn-large  btn-success" data-toggle="tooltip" title="Вход"><span
+                            class="glyphicon glyphicon-user"></span></a>
                     <a ng-click="register()" class="btn btn-large btn-default">Регистрация </a>
                 </div>
                 <div class="btn-group" ng-show="isLoggedIn()">
-                    <a class="btn btn-large btn-default" ng-click="addVisa()">Добавить карту </a>
-                    <a ng-click="logout()" class="btn btn-large  btn-default ">Выход</a>
+                    <a class="btn btn-large btn-success" ui-sref="cartFrom" data-toggle="tooltip" title="Корзина"><span
+                            class="glyphicon glyphicon-shopping-cart"></span></a>
+                    <a class="btn btn-large btn-default" ng-click="addVisa()" data-toggle="tooltip"
+                       title="Добавить карту оплаты"><span class="glyphicon glyphicon-credit-card"></span> Visa</a>
+                    <a ng-click="logout()" class="btn btn-large  btn-danger " data-toggle="tooltip" title="Выход"><span
+                            class="glyphicon glyphicon-off"></span></a>
                 </div>
             </form>
         </ul>

@@ -146,6 +146,7 @@ angular.module('account', ['ui.router', 'ngResource'])
                 url: '/api/addVisa/',
                 data: $scope.visa
             }).success(function (data) {
+                console.log("VISA data " + typeof data);
                 $scope.submitting = false;
                 $window.alert("Карта добавлена!");
                 $modalInstance.close(data);
