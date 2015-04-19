@@ -9,35 +9,25 @@ angular.module('cartForm', ['ui.router', 'ngResource', 'phones', 'account'])
                     controller: 'CartCtrl'
                 }
             },
-            resolve: {
-                account: function (accountService, $stateParams) {
-                    return accountService.getAccountById($stateParams.accountId);
-                }
-            },
             data: {pageTitle: 'Корзина'}
         })
             .state('manageCart', {
-                url: '/manage/cart?accountId',
+                url: '/cart?name',
                 views: {
                     'main': {
                         templateUrl: 'partials/cart.html',
                         controller: 'CartCtrl'
                     }
                 },
-                resolve: {
-                    account: function (accountService, $stateParams) {
-                        return accountService.getAccountById($stateParams.accountId);
-                    }
-                },
                 data: {pageTitle: "Cart"}
             });
     })
 
-    .factory('cartService', function ($resource) {
+    .factory('cartService', function ($resource, $http) {
         var service = {};
         service.items = [];
 
-        service.getAllPhonesToCart = function () {
+        service.getAllPhonesToLocal= function () {
             return localStorage.getItem("phone");
         };
 
@@ -59,23 +49,72 @@ angular.module('cartForm', ['ui.router', 'ngResource', 'phones', 'account'])
 
         };
 
+        service.getPhonesToCart = function(accountId , data) {
+            return $http({
+                url: "/api/cart",
+                method: "GET",
+                params: {accountId: accountId},
+                data: data
+            }).success(function (success) {
+
+            }).error(function (data, status) {
+                alert("bad " + data);
+            });
+        };
+
+        service.savaParametrs = function(accName, phones) {
+           return $http({
+               url: "/api/cart",
+               method: "POST",
+               params: {name: accName},
+               data: phones
+           }).success(function (success) {
+
+           }).error(function (data, status) {
+               alert("bad " + data);
+           });
+        };
+
 
         return service;
     })
 
 
-    .controller('CartCtrl', function ($scope, phoneService, cartService, account, $state) {
+    .controller('CartCtrl', function ($scope, phoneService, cartService, accountService, $state, $stateParams) {
+        var phone = cartService.getAllPhonesToLocal();
+        accountService.getAuthorizedAccount().success(function (account) {
+            $scope.account = account;
+        });
 
-        var phone = cartService.getAllPhonesToCart();
-        if (phone) {
-            phoneService.getAllPhonesToCart(phone)
-                .success(function (data) {
-                    $scope.items = data;
-                })
-        }
+        if(false) {
+
+            if (phone) {
+                phoneService.getAllPhonesToCart(phone)
+                    .success(function (data) {
+                        cartService.savaParametrs($stateParams.name, data).success( function (data) {
+                            console.log("Сохранили на серваке");
+                            $scope.items = data;
+                        }).error(function (data, status) {
+                            console.log("error");
+
+                        });
+                    });
+            }
+
+        } else {
+            if (phone) {
+                phoneService.getAllPhonesToCart(phone)
+                    .success(function (data) {
+                        $scope.items = data;
+                    });
+            }
+        };
+
+
+
         $scope.setImage = function (imageUrl) {
             $scope.mainImageUrl = imageUrl;
-        }
+        };
 
         // -1 товар
         $scope.minus = function (index) {
@@ -115,64 +154,16 @@ angular.module('cartForm', ['ui.router', 'ngResource', 'phones', 'account'])
             return $scope.items != null;
         };
 
-        // флаг, указывающий на процесс обновления корзины на сервере
-
-        $scope.cartproc = false;
-        // процесс обновления корзины на сервере
-
-        $scope.save = function () {
-            $scope.cartproc = true;
-            var items = $scope.items_cart();
-            $.post('/cart/cart.php', {'cart': items}, function (data, textStatus, jqXHR) {
-                var ids = jQuery.map(data, function (el) {
-                    return el.id;
-                });
-                $scope.items = jQuery.grep($scope.items, function (el) {
-                    return jQuery.inArray(el.id, ids) >= 0;
-                });
-                $scope.cartproc = false;
-                // помечаем форму как не тронутую
-
-                $scope.cartform.$setPristine();
-                $('#cart-size').html(data.length);
-                // применяем изменения модели для обновления представления
-
-                $scope.$apply();
-            }, 'json');
-        };
-        // флаг, указывающий на процесс отправки заявки на сервере
-
-        $scope.orderproc = false;
-        // процесс обновления корзины на сервере
-
         $scope.send = function () {
-            $scope.orderproc = true;
-            var items = $scope.items_cart();
             var order = $scope.order;
-            $.post('/cart/cart.php', {'cart': items, 'order': order}, function (data, textStatus, jqXHR) {
-                var ids = jQuery.map(data, function (el) {
-                    return el.id;
-                });
-                $scope.items = jQuery.grep($scope.items, function (el) {
-                    return jQuery.inArray(el.id, ids) >= 0;
-                });
-                $scope.orderproc = false;
-                // помечаем форму как не тронутую
+         alert("Ваш заказ успешно обработан, в ближайшее время с вами свяжутся...")
+        $state.go("phones");
 
-                $scope.cartform.$setPristine();
-                $('#cart-size').html(data.length);
-                // плагин Twitter Bootstrap для модальных окон
-
-                $('#order-alert').modal();
-                // применяем изменения модели для обновления представления
-
-                $scope.$apply();
-            }, 'json');
         };
         // модель заявки
 
         $scope.order = {
-            name: '',
+            name:'',
             email: '',
             phone: '',
             address: '',

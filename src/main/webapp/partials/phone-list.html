@@ -1,4 +1,4 @@
-<div class="container">
+<!--<div class="container">
     <div class="row">
         <ul>
             <li ng-repeat="phone in phones | filter:query  "
@@ -17,22 +17,68 @@
 
                 <div class="col-md-2 col-xs-12">
                     <p class="text-left">Стоимость: <span style="color: green"> {{phone.cost | currency}} </span></p>
-                    <!-- <button type="button" name="В корзину" class="btn btn-default" ng-click="toCart()" >В корзину</button>-->
+                    &lt;!&ndash; <button type="button" name="В корзину" class="btn btn-default" ng-click="toCart()" >В корзину</button>&ndash;&gt;
                     <div>
                         <a class="btn btn-success" ng-click="openNewBuyDlg(phone);">Купить</a>
                         <a class="btn btn-info" ng-click="toCart(phone.id)"><span
                                 class="glyphicon glyphicon-shopping-cart"></span></a>
                     </div>
                 </div>
-                <!--<p class="text-info">{{addProduct}}</span></p>-->
+                &lt;!&ndash;<p class="text-info">{{addProduct}}</span></p>&ndash;&gt;
             </li>
-        </ul>
+        </ul>-->
 
-
+<!--
     </div>
     <div ng-show="flagVisible">
         <p class="text-center"><b><span
                 style="color: green">Всего заказано на сумму:<span>{{total() | currency}}  </span> </span> </b>
         </p>
+    </div>
+</div>-->
+
+<div class="container">
+    <div class="row">
+        <div ng-show="flagVisible">
+            <p class="text-center"><b><span
+                    style="color: green">Всего заказано на сумму:<span>{{total() | currency}}  </span> </span> </b>
+            </p>
+        </div>
+        <div class="col-md-3" ng-repeat="phone in phones | filter:query  "
+            ng-show="phone.count"  >
+
+            <div class="my-magazine">
+                <div class="my-magazine-img">
+                    <a ui-sref="phone({phoneId:phone.id})" ><img ng-src="{{phone.images[0]}}"></a>
+
+                    <div class="my-magazine-title">
+                        <a ui-sref="phone({phoneId:phone.id})">{{phone.name}}</a>
+                    </div>
+                    </div>
+                    <div class="line_under">
+                        <div class="line_left"></div>
+                        <div class="line_center"></div>
+                        <div class="line_right"></div>
+                    </div>
+                    <div class="my-magazine-opesanie">
+                        <p>{{phone.description}}</p>
+                    </div>
+                    <div class="my-magazine-count">
+                        <p>Осталось: {{phone.count}} шт.</p>
+                    </div>
+                    <div class="my-magazine-cena">
+                        <p class="text-left"><span> {{phone.cost | currency}} </span>
+                        </p>
+                    </div>
+                    <div class="my-magazine-korzina">
+                        <div  ng-click="toggleActive(phone)"  ng-class="{active:phone.active}">
+                            <a class="btn btn-success" ng-click="openNewBuyDlg(phone);">Купить</a>
+                            <a class="btn btn-info" ng-click="toCart(phone.id)"><span
+                                    class="glyphicon glyphicon-shopping-cart"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -98,6 +98,7 @@ angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap', 'cartForm']
         };
 
         $scope.total = function () {
+
             var total = 0;
 
             angular.forEach($scope.phones, function (s) {

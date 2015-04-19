@@ -27,8 +27,11 @@
 </head>
 <body role="document" ng-style="{'background-image':'url(img/bg.jpg)'}">
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container-fluid">
-        <ul class="nav navbar-nav">
+    <div class="container-fluid" >
+        <div class="row">
+            <div class="col-sm-4">
+
+        <ul class="nav navbar-nav" >
 
             <form class="navbar-form navbar-left" role="search">
                 <a class="btn btn-large  btn-info" ui-sref="phones" data-toggle="tooltip" title="Домой"> <span
@@ -36,27 +39,34 @@
                 <input ng-model="query" class="form-control" placeholder="Найти...">
             </form>
         </ul>
-        <ul class="nav navbar-nav navbar-right" ng-controller="LoginCtrl">
-            <li class="bottom-right"><a class="test-right" ng-show="isLoggedIn()"><span style="color: #eea236"
-                                                                                        ng-bind="username"></span></a>
-            </li>
+            </div>
+            <div class="col-sm-4 panel-title" ng-controller="LoginCtrl" >
+
+                <p class="test-center" ng-show="isLoggedIn()">Добро пожаловать!</p>
+                <p class="test-center" ng-hide="isLoggedIn()" >Вы не авторизованы.....</span></p>
+                </div>
+            <div class="col-sm-4">
+        <ul class="nav navbar-nav navbar-right" ng-controller="LoginCtrl" >
             <form class="navbar-form navbar-left">
                 <div class="btn-group" ng-hide="isLoggedIn()">
                     <a ng-click="login()" class="btn btn-large  btn-success" data-toggle="tooltip" title="Вход"><span
                             class="glyphicon glyphicon-user"></span></a>
                     <a ng-click="register()" class="btn btn-large btn-default">Регистрация </a>
                 </div>
-                <div class="btn-group" ng-show="isLoggedIn()">
-                    <a class="btn btn-large btn-success" ui-sref="manageCart({accountId:account.id})"
-                       data-toggle="tooltip" title="Корзина"><span
-                            class="glyphicon glyphicon-shopping-cart"></span></a>
-                    <a class="btn btn-large btn-default" ng-click="addVisa()" data-toggle="tooltip"
+                <div class="btn-group" ng-show="isLoggedIn()" >
+
+                    <a class="btn btn-large btn-default panel-user" ng-click="addVisa()" data-toggle="tooltip"
                        title="Добавить карту оплаты"><span class="glyphicon glyphicon-credit-card"></span> Visa</a>
+                    <a class="btn btn-large  btn-success panel-user" ng-show="isLoggedIn()" ui-sref="manageCart({name:username})">
+                        <span  class="glyphicon glyphicon-shopping-cart "  data-toggle="tooltip" title="Корзина"></span>
+                        <span ng-bind="username"></span><span class="glyphicon glyphicon-user"></span></a>
                     <a ng-click="logout()" class="btn btn-large  btn-danger " data-toggle="tooltip" title="Выход"><span
                             class="glyphicon glyphicon-off"></span></a>
                 </div>
             </form>
         </ul>
+         </div>
+</div>
     </div>
 </nav>
 

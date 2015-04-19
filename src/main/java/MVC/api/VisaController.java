@@ -40,13 +40,7 @@ public class VisaController {
             throw new IllegalArgumentException("Invalid arguments.");
         }
 
-    /*   Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(principal instanceof UserDetails) {
-            UserDetails details = (UserDetails) principal;
-            Account loggedIn = accountRepository.findByUsername(details.getUsername());
-            log.info(loggedIn.toString());
-            if (loggedIn==null) return new ResponseEntity<Phone>(HttpStatus.UNAUTHORIZED);
-        }else{new ResponseEntity<Phone>(HttpStatus.UNAUTHORIZED);}*/
+
 
         log.info(buyVisa.toString());
         ResponseEntity<Phone> rv;
