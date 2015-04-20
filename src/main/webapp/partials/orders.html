@@ -1,7 +1,9 @@
 <div class="container">
     <div class="row">
         <div class="text-center">
-            <h1>Ваши заказы</h1>
+            <h1>Мои заказы</h1>
+
+            <h3>На этой странице история ваших заказов</h3>
         </div>
         <div class="col-md-3" ng-repeat="order in orders">
             <div class="my-magazine">
@@ -18,7 +20,7 @@
                     <div class="line_right"></div>
                 </div>
                 <div class="my-magazine-opesanie">
-                    <p>{{order.comments}} {{order.uuid}}</p>
+                    <p>{{order.comments}}</p>
                 </div>
                 <div class="my-magazine-cena">
                     <p class="text-left"><span>Заказ на сумму:  {{order.summ | currency}} </span>

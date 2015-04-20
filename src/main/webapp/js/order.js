@@ -1,4 +1,4 @@
-angular.module('orderForm', ['ui.router', 'ngResource', 'phones'])
+angular.module('orderForm', ['ui.router', 'ngResource'])
 
     .config(function config($stateProvider) {
         $stateProvider.state('manageOrder', {
@@ -46,6 +46,18 @@ angular.module('orderForm', ['ui.router', 'ngResource', 'phones'])
             return OrderPhone.query({uuid: uuid});
         };
 
+        service.addOrder = function (accName, phones, order) {
+            return $http({
+                url: "/api/order",
+                method: "POST",
+                params: {name: accName},
+                data: JSON.stringify({phones: phones, order: order})
+            }).success(function (success) {
+
+            }).error(function (data, status) {
+                alert("bad " + data);
+            });
+        };
 
         return service;
     })

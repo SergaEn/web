@@ -15,9 +15,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -28,6 +30,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/api/order")
+@Transactional()
 public class OrderController {
 
     private final Logger log = Logger.getLogger(OrderController.class);
@@ -52,10 +55,9 @@ public class OrderController {
         }
 
         Phone[] phones = mapper.convertValue(node.get("phones"), Phone[].class);
-
         Order order = mapper.convertValue(node.get("order"), Order.class);
-
         UUID orderUUid = UUID.randomUUID();
+
         Account account = accountRepository.findByUsername(name);
         if (account == null) return new ResponseEntity(HttpStatus.FORBIDDEN);
 
@@ -65,9 +67,9 @@ public class OrderController {
             Account loggedIn = accountRepository.findByUsername(details.getUsername());
             if (loggedIn == null || loggedIn.getId() != account.getId())
                 return new ResponseEntity(HttpStatus.FORBIDDEN);
-
+            List<Phone> list = Arrays.asList(phones);
             order.setUuid(orderUUid.toString());
-            order.setPhoneList(Arrays.asList(phones));
+            order.setPhoneList(list);
             order.setAccount(account);
 
             orderRepository.save(order);
@@ -82,6 +84,7 @@ public class OrderController {
 
     @PreAuthorize("hasAuthority('USER')")
     @RequestMapping(method = RequestMethod.GET)
+    @Transactional(readOnly = true)
     public ResponseEntity<List<Order>> getAllOrdersByAccount(final @RequestParam(value = "name") String name) {
         log.info("NAME : " + name);
         Account account = accountRepository.findByUsername(name);
@@ -107,8 +110,9 @@ public class OrderController {
     }
 
     @PreAuthorize("hasAuthority('USER')")
-    @RequestMapping(value = "/{uuid:\\w+}", method = RequestMethod.GET)
-    public ResponseEntity<List<Phone>> getAllPhonesByOrder(final @PathVariable String uuid) {
+    @RequestMapping(value = "/{uuid}", method = RequestMethod.GET)
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<Phone>> getAllPhonesByOrder(final @PathVariable("uuid") String uuid) {
         log.info("String UUID : " + uuid);
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {

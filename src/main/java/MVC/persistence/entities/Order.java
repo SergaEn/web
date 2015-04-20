@@ -4,7 +4,7 @@ import MVC.config.JsonDateSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -19,16 +19,11 @@ public class Order extends MappedModel {
 
     private String uuid;
 
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
-    }
-
     @JsonSerialize(using = JsonDateSerializer.class)
     private Date orderDate;
+
     private String name;
     private String email;
-
-
     private String phone;
     private String address;
     private String comments;
@@ -54,13 +49,15 @@ public class Order extends MappedModel {
                 '}';
     }
 
-    @ElementCollection
-    @CollectionTable(name = "order_phones", joinColumns = @JoinColumn(name = "order_id"))
-    @OrderColumn
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Phone> phoneList;
 
     public Account getAccount() {
         return account;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
     }
 
     public Date getOrderDate() {

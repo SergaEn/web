@@ -196,11 +196,22 @@ label.col-sm-4.control-label {
     margin: 10px 0 10px;
     max-height: 450px;
 }
+
+.shopFullHeight {
+    max-height: 100%;
+}
+
+
 .my-magazine:hover{
     border: 1px solid #009dcd;
 }
 .my-magazine img{
     max-width: 100%;
+}
+
+.phoneImg img {
+
+    max-height: 112px;
 }
 .my-magazine-korzina{
     position: relative;
@@ -268,4 +279,30 @@ label.col-sm-4.control-label {
     margin-left: -141px;
     font-family: monospace;
     font-size: 29px;
+}
+
+.basket input {
+    width: 66px;
+    text-align: center;
+}
+
+.ShopRowTR {
+    text-align: center;
+    border: 2px solid #ededed;
+    padding: 10px;
+    margin: 10px 0 10px;
+    height: 170px;
+    width: 100%;
+
+}
+
+td {
+    padding-left: 60px;
+    padding-right: 20px;
+    /*padding-top: 5px;*/
+}
+
+th {
+    padding-left: 60px;
+    padding-right: 20px;
 }

@@ -44,27 +44,6 @@ public class PhoneController {
         return phone;
     }
 
-    @RequestMapping(method = POST)
-    public List<Phone> getAllPhonesToCart(final @RequestBody List<String> setId, final BindingResult bindingResult) {
-        Phone phone;
-        final List<Phone> phones = new ArrayList<Phone>();
-        if (bindingResult.hasErrors()) {
-            throw new IllegalArgumentException("Invalid arguments.");
-        }
-        Set<Integer> integers = new HashSet<Integer>();
-        for (String str : setId) {
-            Integer i = Integer.parseInt(str);
-            integers.add(i);
-        }
-
-        for (Integer i : integers) {
-            phone = phoneRepository.findOne(i);
-            phones.add(phone);
-        }
-
-
-        return phones;
-    }
 
 
 }

@@ -23,10 +23,7 @@ public class Cart extends MappedModel {
     @OneToOne
     private Account account;
 
-
-    @ElementCollection
-    @CollectionTable(name = "cart_phones", joinColumns = @JoinColumn(name = "cart_id"))
-    @OrderColumn
+    @OneToMany
     private List<Phone> phones;
 
     public Account getAccount() {

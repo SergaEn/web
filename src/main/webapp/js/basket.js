@@ -1,11 +1,11 @@
-angular.module('cartForm', ['ui.router', 'ngResource', 'phones', 'account', 'orderForm'])
+angular.module('cartForm', ['ui.router', 'ngResource', 'account', 'orderForm'])
 
     .config(function config($stateProvider) {
         $stateProvider.state('manageCart', {
                 url: '/cart?name',
                 views: {
                     'main': {
-                        templateUrl: 'partials/cart.html',
+                        templateUrl: 'partials/basket.html',
                         controller: 'CartCtrl'
                     }
                 },
@@ -39,38 +39,22 @@ angular.module('cartForm', ['ui.router', 'ngResource', 'phones', 'account', 'ord
 
         };
 
-        service.getPhonesToCart = function(accountId , data) {
-            return $http({
-                url: "/api/cart",
-                method: "GET",
-                params: {accountId: accountId},
-                data: data
-            }).success(function (success) {
-
+        service.getAllPhonesToCart = function (data) {
+            var arr = data.split(',');
+            return $http.post("/api/cart", arr).success(function (success) {
             }).error(function (data, status) {
                 alert("bad " + data);
             });
         };
 
-        service.addOrder = function (accName, phones, order) {
-           return $http({
-               url: "/api/order",
-               method: "POST",
-               params: {name: accName},
-               data: JSON.stringify({phones: phones, order: order})
-           }).success(function (success) {
 
-           }).error(function (data, status) {
-               alert("bad " + data);
-           });
-        };
 
 
         return service;
     })
 
 
-    .controller('CartCtrl', function ($scope, phoneService, cartService, accountService, $state, $stateParams) {
+    .controller('CartCtrl', function ($scope, cartService, accountService, $state, $stateParams, orderService) {
         var phone = cartService.getAllPhonesToLocal();
         accountService.getAuthorizedAccount().success(function (account) {
             $scope.account = account;
@@ -79,7 +63,7 @@ angular.module('cartForm', ['ui.router', 'ngResource', 'phones', 'account', 'ord
 
 
             if (phone) {
-                phoneService.getAllPhonesToCart(phone)
+                cartService.getAllPhonesToCart(phone)
                     .success(function (data) {
                         $scope.items = data;
                     });
@@ -135,9 +119,9 @@ angular.module('cartForm', ['ui.router', 'ngResource', 'phones', 'account', 'ord
             var order = $scope.order;
             order.summ = $scope.total();
 
-            cartService.addOrder($stateParams.name, $scope.items, order).success(function (data) {
+            orderService.addOrder($stateParams.name, $scope.items, order).success(function (data) {
                 alert("Ваш заказ успешно обработан, в ближайшее время с вами свяжутся...")
-                $state.go("phones");
+                $state.go("manageOrder", {name: $scope.account.username});
             }).error(function (data, status) {
                 console.log("error " + status + " " + data);
 

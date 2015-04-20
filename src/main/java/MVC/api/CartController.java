@@ -20,7 +20,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 
 /**
@@ -29,7 +34,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/cart")
-
+@Transactional()
 public class CartController {
     private final Logger log = Logger.getLogger(CartController.class);
     @Autowired
@@ -41,40 +46,11 @@ public class CartController {
     @Autowired
     PhoneRepository phoneRepository;
 
-    @PersistenceContext
-    EntityManager entityManager;
-
     @Autowired
     OrderRepository orderRepository;
 
 
-    @PreAuthorize("hasAuthority('USER')")
-    @RequestMapping( method = RequestMethod.POST)
-    public ResponseEntity<List<Phone>> savaParametrs(final BindingResult bindingResult, final @RequestParam(value="name") String name, final @RequestBody List<Phone> list) {
-
-        if (bindingResult.hasErrors() || name==null) {
-            throw new IllegalArgumentException("Invalid arguments.");
-        }
-        Account account = accountRepository.findByUsername(name);
-        if(account == null) return  new ResponseEntity(HttpStatus.FORBIDDEN);
-
-  Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(principal instanceof UserDetails) {
-            UserDetails details = (UserDetails) principal;
-            Account loggedIn = accountRepository.findByUsername(details.getUsername());
-            if (loggedIn==null || loggedIn.getId() != account.getId()) return new ResponseEntity(HttpStatus.UNAUTHORIZED);
-
-            Cart cart = new Cart(list, loggedIn);
-            entityManager.merge(cart);
-            return new ResponseEntity<List<Phone>> (HttpStatus.OK);
-        }else{new ResponseEntity(HttpStatus.FORBIDDEN);}
-
-
-
-
-        return new ResponseEntity(HttpStatus.FORBIDDEN);
-    }
-
+    @Deprecated
     @Transactional(readOnly = true)
     @RequestMapping( method = RequestMethod.GET)
     public ResponseEntity<List<Phone>> getPhonesToCart(final BindingResult bindingResult,final @RequestParam(value="name") String name) {
@@ -98,6 +74,29 @@ public class CartController {
         }else{new ResponseEntity(HttpStatus.FORBIDDEN);}
 
         return new ResponseEntity(HttpStatus.FORBIDDEN);
+    }
+
+
+    @RequestMapping(method = POST)
+    public ResponseEntity<List<Phone>> getAllPhonesToCart(final @RequestBody List<String> listId, final BindingResult bindingResult) {
+        Phone phone;
+        final List<Phone> phones = new ArrayList<Phone>();
+        if (bindingResult.hasErrors()) {
+            throw new IllegalArgumentException("Invalid arguments.");
+        }
+        Set<Integer> integers = new HashSet<Integer>();
+        for (String str : listId) {
+            Integer i = Integer.parseInt(str);
+            integers.add(i);
+        }
+
+        for (Integer i : integers) {
+            phone = phoneRepository.findOne(i);
+            phones.add(phone);
+        }
+
+
+        return new ResponseEntity<List<Phone>>(phones, HttpStatus.MULTI_STATUS.OK);
     }
 
 

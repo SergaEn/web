@@ -33,25 +33,10 @@ angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap', 'cartForm']
             });
     })
 
-    .factory('phoneService', function ($resource, $http) {
+    .factory('phoneService', function ($resource) {
         var service = {};
 
         service.getAllPhones = function () {
-            var Phones = $resource("/api/phones");
-            return Phones.query();
-
-        };
-
-        service.getAllPhonesToCart = function (data) {
-            var arr = data.split(',');
-            return $http.post("/api/phones", arr).success(function (success) {
-
-            }).error(function (data, status) {
-                alert("bad " + data);
-            });
-        };
-
-        service.getAllPhonesByOrder = function (orderUid) {
             var Phones = $resource("/api/phones");
             return Phones.query();
 
@@ -117,7 +102,6 @@ angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap', 'cartForm']
     })
     .controller('PhoneDetailCtrl', function ($scope, $modal, phone) {
         $scope.phone = phone;
-
 
         $scope.setImage = function (imageUrl) {
             $scope.mainImageUrl = imageUrl;

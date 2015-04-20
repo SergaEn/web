@@ -34,7 +34,8 @@
                     </div>
                 <div class="my-magazine-korzina">
                         <div  ng-click="toggleActive(phone)"  ng-class="{active:phone.active}">
-                            <a class="btn btn-success" ng-click="openNewBuyDlg(phone);"
+
+                        <a class="btn btn-success" ng-click="openNewBuyDlg(phone);"
                                data-ng-disabled="phone.count<1">Купить</a>
                             <a class="btn btn-info" ng-click="toCart(phone.id)" data-ng-disabled="phone.count===0"><span
                                     class="glyphicon glyphicon-shopping-cart"></span></a>
