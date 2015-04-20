@@ -257,3 +257,15 @@ label.col-sm-4.control-label {
 .panel-user span {
     padding-right: 5px;
 }
+
+#center {
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 69px;
+    position: absolute;
+    margin-top: 0;
+    margin-left: -141px;
+    font-family: monospace;
+    font-size: 29px;
+}

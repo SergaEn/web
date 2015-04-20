@@ -5,6 +5,7 @@ import MVC.persistence.entities.Cart;
 import MVC.persistence.entities.Phone;
 import MVC.persistence.repositories.AccountRepository;
 import MVC.persistence.repositories.CartRepository;
+import MVC.persistence.repositories.OrderRepository;
 import MVC.persistence.repositories.PhoneRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,9 @@ public class CartController {
 
     @PersistenceContext
     EntityManager entityManager;
+
+    @Autowired
+    OrderRepository orderRepository;
 
 
     @PreAuthorize("hasAuthority('USER')")
@@ -95,5 +99,6 @@ public class CartController {
 
         return new ResponseEntity(HttpStatus.FORBIDDEN);
     }
+
 
 }

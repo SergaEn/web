@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="row">
+        <div class="text-center">
+            <h1>Ваши заказы</h1>
+        </div>
+        <div class="col-md-3" ng-repeat="order in orders">
+            <div class="my-magazine">
+                <div class="my-magazine-img">
+                    <a ui-sref="order({uuid:order.uuid})"><img ng-src="{{order.phoneList[0].images[0]}}"></a>
+
+                    <div class="my-magazine-title">
+                        <a ui-sref="order({uuid:order.uuid})">Дата заказа: {{order.orderDate}}</a>
+                    </div>
+                </div>
+                <div class="line_under">
+                    <div class="line_left"></div>
+                    <div class="line_center"></div>
+                    <div class="line_right"></div>
+                </div>
+                <div class="my-magazine-opesanie">
+                    <p>{{order.comments}} {{order.uuid}}</p>
+                </div>
+                <div class="my-magazine-cena">
+                    <p class="text-left"><span>Заказ на сумму:  {{order.summ | currency}} </span>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

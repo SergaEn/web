@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="row">
+        <div>
+            <p class="text-center"><b><span
+                    style="color: green">Всего заказано на сумму:<span>{{total() | currency}}  </span> </span> </b>
+            </p>
+        </div>
+        <div class="col-md-3" ng-repeat="phone in phones | filter:query  "
+                >
+
+            <div class="my-magazine">
+                <div class="my-magazine-img">
+                    <a ui-sref="phone({phoneId:phone.id})"><img ng-src="{{phone.images[0]}}"></a>
+
+                    <div class="my-magazine-title">
+                        <a ui-sref="phone({phoneId:phone.id})">{{phone.name}}</a>
+                    </div>
+                </div>
+                <div class="line_under">
+                    <div class="line_left"></div>
+                    <div class="line_center"></div>
+                    <div class="line_right"></div>
+                </div>
+                <div class="my-magazine-opesanie">
+                    <p>{{phone.description}}</p>
+                </div>
+                <div class="my-magazine-cena">
+                    <p class="text-left"><span> {{phone.cost | currency}} </span>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>

@@ -28,6 +28,7 @@ public class PhoneController {
     @Autowired
     private PhoneRepository phoneRepository;
 
+
     @RequestMapping(value = "/{id:\\d+}", method = GET)
    /* @PreAuthorize("isAuthenticated()")*/
     Phone getPhones(final @PathVariable Integer id) {
@@ -64,7 +65,6 @@ public class PhoneController {
 
         return phones;
     }
-
 
 
 }

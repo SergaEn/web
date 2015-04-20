@@ -103,7 +103,7 @@ public class AccoutController {
             }
         }
 
-        return new ResponseEntity<Account>(new Account(""), HttpStatus.OK);
+        return new ResponseEntity<Account>(new Account("anonymous"), HttpStatus.OK);
     }
 
 

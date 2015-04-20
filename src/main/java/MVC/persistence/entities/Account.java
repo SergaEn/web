@@ -26,6 +26,17 @@ public class Account extends MappedModel {
     @OneToMany(mappedBy = "account", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<UserRole> userRole = new HashSet<UserRole>(1);
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
+    private Set<Order> orders = new HashSet<Order>(1);
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
+    }
 
     public Set<UserRole> getUserRole() {
         return this.userRole;

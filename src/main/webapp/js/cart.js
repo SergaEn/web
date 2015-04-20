@@ -1,17 +1,7 @@
-angular.module('cartForm', ['ui.router', 'ngResource', 'phones', 'account'])
+angular.module('cartForm', ['ui.router', 'ngResource', 'phones', 'account', 'orderForm'])
 
     .config(function config($stateProvider) {
-        $stateProvider.state('cartFrom', {
-            url: '/cartFrom',
-            views: {
-                'main': {
-                    templateUrl: 'partials/cart.html',
-                    controller: 'CartCtrl'
-                }
-            },
-            data: {pageTitle: 'Корзина'}
-        })
-            .state('manageCart', {
+        $stateProvider.state('manageCart', {
                 url: '/cart?name',
                 views: {
                     'main': {
@@ -19,7 +9,7 @@ angular.module('cartForm', ['ui.router', 'ngResource', 'phones', 'account'])
                         controller: 'CartCtrl'
                     }
                 },
-                data: {pageTitle: "Cart"}
+            data: {pageTitle: "Корзина"}
             });
     })
 
@@ -62,12 +52,12 @@ angular.module('cartForm', ['ui.router', 'ngResource', 'phones', 'account'])
             });
         };
 
-        service.savaParametrs = function(accName, phones) {
+        service.addOrder = function (accName, phones, order) {
            return $http({
-               url: "/api/cart",
+               url: "/api/order",
                method: "POST",
                params: {name: accName},
-               data: phones
+               data: JSON.stringify({phones: phones, order: order})
            }).success(function (success) {
 
            }).error(function (data, status) {
@@ -84,31 +74,18 @@ angular.module('cartForm', ['ui.router', 'ngResource', 'phones', 'account'])
         var phone = cartService.getAllPhonesToLocal();
         accountService.getAuthorizedAccount().success(function (account) {
             $scope.account = account;
+            console.log("Cart " + $scope.account.username);
         });
 
-        if(false) {
 
-            if (phone) {
-                phoneService.getAllPhonesToCart(phone)
-                    .success(function (data) {
-                        cartService.savaParametrs($stateParams.name, data).success( function (data) {
-                            console.log("Сохранили на серваке");
-                            $scope.items = data;
-                        }).error(function (data, status) {
-                            console.log("error");
-
-                        });
-                    });
-            }
-
-        } else {
             if (phone) {
                 phoneService.getAllPhonesToCart(phone)
                     .success(function (data) {
                         $scope.items = data;
                     });
             }
-        };
+        ;
+
 
 
 
@@ -156,8 +133,16 @@ angular.module('cartForm', ['ui.router', 'ngResource', 'phones', 'account'])
 
         $scope.send = function () {
             var order = $scope.order;
-         alert("Ваш заказ успешно обработан, в ближайшее время с вами свяжутся...")
-        $state.go("phones");
+            order.summ = $scope.total();
+
+            cartService.addOrder($stateParams.name, $scope.items, order).success(function (data) {
+                alert("Ваш заказ успешно обработан, в ближайшее время с вами свяжутся...")
+                $state.go("phones");
+            }).error(function (data, status) {
+                console.log("error " + status + " " + data);
+
+            });
+
 
         };
         // модель заявки
@@ -167,7 +152,8 @@ angular.module('cartForm', ['ui.router', 'ngResource', 'phones', 'account'])
             email: '',
             phone: '',
             address: '',
-            comments: ''
+            comments: '',
+            orderDate: new Date()
         };
 
 

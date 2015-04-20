@@ -51,6 +51,11 @@ angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap', 'cartForm']
             });
         };
 
+        service.getAllPhonesByOrder = function (orderUid) {
+            var Phones = $resource("/api/phones");
+            return Phones.query();
+
+        };
 
         service.getPhoneById = function (phoneId) {
             var Phone = $resource("/api/phones/:phoneId");

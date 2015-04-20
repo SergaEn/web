@@ -4,7 +4,8 @@ angular.module('RootApp', [
     'phones',
     'cartForm',
     'phoneAnimations',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'orderForm'
 
 
 ])
