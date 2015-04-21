@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "phones")
-@JsonIgnoreProperties
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Phone extends MappedModel {
 
     private String name;

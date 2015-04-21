@@ -30,7 +30,7 @@ public class Order extends MappedModel {
     private String summ;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "account_id")
     private Account account;
 
@@ -49,7 +49,7 @@ public class Order extends MappedModel {
                 '}';
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany()
     private List<Phone> phoneList;
 
     public Account getAccount() {

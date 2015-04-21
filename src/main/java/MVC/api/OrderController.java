@@ -19,10 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by en on 20.04.2015.
@@ -32,7 +29,8 @@ import java.util.UUID;
 @RequestMapping(value = "/api/order")
 @Transactional()
 public class OrderController {
-
+    private final HashMap<Integer, Integer> countPhone = new HashMap();
+    private final Map<Integer, Integer> synmap = Collections.synchronizedMap(countPhone);
     private final Logger log = Logger.getLogger(OrderController.class);
     @Autowired
     AccountRepository accountRepository;
@@ -68,6 +66,8 @@ public class OrderController {
             if (loggedIn == null || loggedIn.getId() != account.getId())
                 return new ResponseEntity(HttpStatus.FORBIDDEN);
             List<Phone> list = Arrays.asList(phones);
+            for (Phone phone : list)
+                synmap.put(phone.getId(), phone.getCount());
             order.setUuid(orderUUid.toString());
             order.setPhoneList(list);
             order.setAccount(account);
@@ -86,51 +86,34 @@ public class OrderController {
     @RequestMapping(method = RequestMethod.GET)
     @Transactional(readOnly = true)
     public ResponseEntity<List<Order>> getAllOrdersByAccount(final @RequestParam(value = "name") String name) {
-        log.info("NAME : " + name);
         Account account = accountRepository.findByUsername(name);
         if (account == null) return new ResponseEntity(HttpStatus.FORBIDDEN);
 
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            UserDetails details = (UserDetails) principal;
-            Account loggedIn = accountRepository.findByUsername(details.getUsername());
-            if (loggedIn == null || loggedIn.getId() != account.getId())
-                return new ResponseEntity(HttpStatus.FORBIDDEN);
-
-            List<Order> orders = orderRepository.findAll();
+        List<Order> orders = orderRepository.findOrderByAccount(account);
             for (Order order : orders)
-                log.info(order.toString());
+                log.info("ORDER: " + order.toString());
             return new ResponseEntity<List<Order>>(orders, HttpStatus.OK);
 
-        } else {
-            new ResponseEntity(HttpStatus.FORBIDDEN);
-        }
-
-        return new ResponseEntity(HttpStatus.FORBIDDEN);
     }
 
     @PreAuthorize("hasAuthority('USER')")
     @RequestMapping(value = "/{uuid}", method = RequestMethod.GET)
     @Transactional(readOnly = true)
     public ResponseEntity<List<Phone>> getAllPhonesByOrder(final @PathVariable("uuid") String uuid) {
-        log.info("String UUID : " + uuid);
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            UserDetails details = (UserDetails) principal;
-            Account loggedIn = accountRepository.findByUsername(details.getUsername());
+
             Order order = orderRepository.findOrderByUuid(uuid);
+
+        if (order == null) return new ResponseEntity(HttpStatus.NOT_FOUND);
             Account account = order.getAccount();
-            if (loggedIn == null || loggedIn.getId() != account.getId())
-                return new ResponseEntity(HttpStatus.FORBIDDEN);
 
             List<Phone> phones = order.getPhoneList();
-
-            return new ResponseEntity<List<Phone>>(phones, HttpStatus.OK);
-        } else {
-            new ResponseEntity(HttpStatus.FORBIDDEN);
+        for (Phone phone : phones) {
+            phone.setCount(synmap.get(phone.getId()));
+            log.info("phone.getCount() :" + phone.getCount());
         }
 
-        return new ResponseEntity(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<List<Phone>>(phones, HttpStatus.OK);
+
     }
 
 }

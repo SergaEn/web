@@ -29,16 +29,20 @@
                     </td>
                     <td>
                         <div class="row">
-                            <div class="basket">
-                                <input type="number" name="count[{{item.count}}]" ng-model="item.count"
-                                       class="form-control input-sm ">
+                            <div class="basket btn-group col-sm-12">
+                                <label type="text" ng-bind="item.count" class="form-control"></label>
+                                <button ng-click="minus($index)"
+                                        class="btn btn-default glyphicon glyphicon-minus"></button>
+                                <button ng-click="plus($index)"
+                                        class="btn btn-default glyphicon glyphicon-plus"></button>
                             </div>
+
                         </div>
                     </td>
                     <td>{{item.cost | currency}}</td>
                     <td>{{item.count * item.cost | currency}}</td>
                     <td><a href data-toggle="tooltip" title="Удалить" data-placement="left"
-                           class="pointer helptip glyphicon glyphicon-remove text-danger"
+                           class="pointer helptip glyphicon glyphicon-remove text-danger btn btn-danger"
                            ng-click="removeItem(item)">Удалить</a></td>
                 </tr>
                 </tbody>

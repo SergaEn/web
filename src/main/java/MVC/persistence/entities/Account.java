@@ -27,7 +27,7 @@ public class Account extends MappedModel {
     private Set<UserRole> userRole = new HashSet<UserRole>(1);
 
     @JsonIgnore
-    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
     private Set<Order> orders = new HashSet<Order>(1);
 
     public Set<Order> getOrders() {

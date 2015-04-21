@@ -65,6 +65,10 @@ angular.module('cartForm', ['ui.router', 'ngResource', 'account', 'orderForm'])
             if (phone) {
                 cartService.getAllPhonesToCart(phone)
                     .success(function (data) {
+                        angular.forEach(data, function (item) {
+                            item.count = 1;
+
+                        })
                         $scope.items = data;
                     });
             }

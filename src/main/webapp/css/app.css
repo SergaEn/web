@@ -281,8 +281,8 @@ label.col-sm-4.control-label {
     font-size: 29px;
 }
 
-.basket input {
-    width: 66px;
+.basket label {
+    width: 80px;
     text-align: center;
 }
 
