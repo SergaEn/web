@@ -3,11 +3,10 @@
 
     <h2 ng-hide="items.length">В корзине пусто...</h2>
 </div>
-<div class="row" ng-show="items.length">
+<div class="row Image basket" ng-show="items.length">
     <form id="cartform" name="cartform">
-        <div class="my-magazine shopFullHeight">
-
-            <table ng-show="items.length">
+        <div>
+            <table ng-show="items.length" class="table table-condensed ">
                 <thead>
                 <tr>
                     <th>Товар</th>
@@ -19,17 +18,17 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="ShopRowTR" ng-repeat="item in items"
+                <tr ng-repeat="item in items"
                     ng-class="{opacity50: item.count < 1}">
                     <td>
-                        <a ui-sref="phone({phoneId:item.id})"><h2>{{item.name}}</h2></a>
+                        <a ui-sref="phone({phoneId:item.id})"><h3>{{item.name}}</h3></a>
                     </td>
                     <td>
                         <a ui-sref="phone({phoneId:item.id})"><img ng-src="{{item.images[0]}}"></a>
                     </td>
                     <td>
                         <div class="row">
-                            <div class="basket btn-group col-sm-12">
+                            <div class="col-sm-12">
                                 <label type="text" ng-bind="item.count" class="form-control"></label>
                                 <button ng-click="minus($index)"
                                         class="btn btn-default glyphicon glyphicon-minus"></button>
@@ -39,11 +38,21 @@
 
                         </div>
                     </td>
-                    <td>{{item.cost | currency}}</td>
-                    <td>{{item.count * item.cost | currency}}</td>
-                    <td><a href data-toggle="tooltip" title="Удалить" data-placement="left"
+                    <td>
+                        <label type="text" class="form-control">
+                            {{item.cost | currency}}
+                        </label>
+                    </td>
+                    <td>
+                        <label type="text" class="form-control">
+                            {{item.count * item.cost | currency}}
+                        </label>
+                    </td>
+                    <td>
+                        <p href data-toggle="tooltip" title="Удалить" data-placement="left"
                            class="pointer helptip glyphicon glyphicon-remove text-danger btn btn-danger"
-                           ng-click="removeItem(item)">Удалить</a></td>
+                           ng-click="removeItem(item)">Удалить</p>
+                    </td>
                 </tr>
                 </tbody>
                 <tfoot>
@@ -52,7 +61,8 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td><strong><p class="text-primary">Итого: {{total() | currency}}</p></strong></td>
+                    <td><strong><a class="text-primary basket ">Итого: {{total() | currency}}</a></strong></td>
+                    <td></td>
                 </tr>
                 </tfoot>
             </table>
@@ -68,31 +78,31 @@
         <div class="col-md-2"></div>
     </div>
     <div class="row">
-        <div class="col-md-offset-2 col-md-8">
-            <form novalidate class="form-horizontal" id="orderform" name="orderform">
-                <div class="form-group"
+        <div class="col-md-offset-2 col-md-8 order-form">
+            <form novalidate class="form-horizontal " id="orderform" name="orderform">
+                <div class="form-group "
                      ng-class="{'has-error': orderform.order_name.$invalid, 'has-success': !orderform.order_name.$invalid}">
-                    <label for="order_name" class="control-label col-lg-3">Имя:</label>
+                    <label for="order_name" class="control-label col-lg-4">Имя:</label>
 
-                    <div class="col-lg-9">
+                    <div class="col-lg-8">
                         <input type="text" class="form-control" id="order_name" name="order_name"
                                ng-model="order.name" required>
                     </div>
                 </div>
                 <div class="form-group"
                      ng-class="{'has-error': orderform.order_email.$invalid, 'has-success': !orderform.order_email.$invalid}">
-                    <label for="order_email" class="control-label col-lg-3">Эл. почта:</label>
+                    <label for="order_email" class="control-label col-lg-4">Эл. почта:</label>
 
-                    <div class="col-lg-9">
+                    <div class="col-lg-8">
                         <input type="email" class="form-control" id="order_email" name="order_email"
                                ng-model="order.email" required>
                     </div>
                 </div>
                 <div class="form-group"
                      ng-class="{'has-error': orderform.order_phone.$invalid, 'has-success': !orderform.order_phone.$invalid}">
-                    <label for="order_phone" class="control-label col-lg-3">Телефон:</label>
+                    <label for="order_phone" class="control-label col-lg-4">Телефон:</label>
 
-                    <div class="col-lg-9">
+                    <div class="col-lg-8">
 
                         <input type="tel" pattern="8[0-9]{3}[0-9]{3}[0-9]{2}[0-9]{2}" class="form-control"
                                id="order_phone" name="order_phone"
@@ -100,35 +110,32 @@
                     </div>
                 </div>
                 <div class="form-group" ng-class="{'has-success': order.address}">
-                    <label for="order_address" class="control-label col-lg-3">Адрес:</label>
+                    <label for="order_address" class="control-label col-lg-4">Адрес:</label>
 
-                    <div class="col-lg-9">
+                    <div class="col-lg-8">
                         <input type="text" class="form-control" id="order_address" name="order_address"
                                ng-model="order.address">
                     </div>
                 </div>
                 <div class="form-group" ng-class="{'has-success': order.comments}">
-                    <label for="order_comments" class="control-label col-lg-3">Комментарии к заказу:</label>
+                    <label for="order_comments" class="control-label col-lg-4">Комментарии к заказу:</label>
 
-                    <div class="col-lg-9">
+                    <div class="col-lg-8">
                                 <textarea type="text" class="form-control" id="order_comments" name="order_comments"
-                                          ng-model="order.comments" maxlength="200"></textarea>
+                                          ng-model="order.comments" maxlength="500"></textarea>
                     </div>
                 </div>
             </form>
         </div>
-        <div class="col-md-2"></div>
+
     </div>
     <div class="row">
-        <div class="col-md-offset-2 col-md-2"
+        <div class="col-md-4"></div>
+        <div class="col-md-8 order-form"
              ng-switch="cartform.$valid && orderform.$valid && !orderproc && has_items()">
             <button ng-switch-when="true" ng-click="send()" class="btn btn-success">Отправить</button>
             <button ng-switch-default class="btn btn-success" disabled>Отправить</button>
         </div>
-        <div class="col-md-6">
-
-        </div>
-        <div class="col-md-2"></div>
     </div>
 
 

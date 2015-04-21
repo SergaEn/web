@@ -45,7 +45,7 @@ body {
 }
 
 /** Detail View **/
-/*img.phone {
+.phone {
     float: left;
     margin-right: 3em;
     margin-bottom: 2em;
@@ -54,7 +54,7 @@ body {
     height: 400px;
     width: 400px;
     display: none;
-}*/
+}
 
 img.phone:first-child {
     display: block;
@@ -137,6 +137,20 @@ label.col-sm-4.control-label {
     text-align: center;
 }
 
+.order-form input {
+    max-width: 300px;
+    text-align: center;
+}
+
+.order-form textarea {
+    max-width: 300px;
+}
+
+.order-form button {
+    margin-top: 10px;
+    margin-left: 160px;
+}
+
 .td.thumbnail {
     padding-left: 0px;
     width: 100px;
@@ -201,6 +215,11 @@ label.col-sm-4.control-label {
     max-height: 100%;
 }
 
+.shopFullHeight {
+    max-width: 50%;
+    max-height: 50%;
+}
+
 
 .my-magazine:hover{
     border: 1px solid #009dcd;
@@ -209,10 +228,10 @@ label.col-sm-4.control-label {
     max-width: 100%;
 }
 
-.phoneImg img {
+/*.phoneImg img {
 
     max-height: 112px;
-}
+}*/
 .my-magazine-korzina{
     position: relative;
     text-align: center;
@@ -282,27 +301,60 @@ label.col-sm-4.control-label {
 }
 
 .basket label {
-    width: 80px;
+    max-width: 50%;
+    text-align: center;
+    margin-top: 30%;
+    margin-left: 25%;
+}
+
+.basket-count p {
     text-align: center;
 }
 
-.ShopRowTR {
+.basket p {
+    max-width: 50%;
     text-align: center;
-    border: 2px solid #ededed;
+    margin-top: 31%;
+    margin-left: -2%;
+}
+
+.basket h3 {
+    text-align: center;
+    margin-top: 30%;
+    margin-left: 22%;
+}
+
+.basket td {
+    width: 300px;
+    text-align: center;
+    margin-top: 21%;
+
+}
+
+.basket th {
+    text-align: center;
+    margin-top: 21%;
+    padding-left: 200px;
+}
+
+.Image tr {
+    text-align: center;
+    border: 1px solid #ededed;
     padding: 10px;
     margin: 10px 0 10px;
-    height: 170px;
-    width: 100%;
-
+    max-height: 150px;
+    text-align: center;
+    background: white;
 }
 
-td {
-    padding-left: 60px;
-    padding-right: 20px;
-    /*padding-top: 5px;*/
+.basket img {
+    max-height: 150px;
 }
 
-th {
+.tableTd {
     padding-left: 60px;
     padding-right: 20px;
+    padding-top: 50%;
+    text-align: center;
+
 }

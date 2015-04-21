@@ -97,13 +97,13 @@ public class AccoutController {
             Account loggedIn = accountRepository.findByUsername(details.getUsername());
 
             if (loggedIn == null) {
-                return new ResponseEntity<Account>(new Account("anonymous"), HttpStatus.OK);
+                return new ResponseEntity<Account>(HttpStatus.FORBIDDEN);
             } else {
                 return new ResponseEntity<Account>(loggedIn, HttpStatus.OK);
             }
         }
 
-        return new ResponseEntity<Account>(new Account("anonymous"), HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.FORBIDDEN);
     }
 
 
