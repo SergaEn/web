@@ -124,14 +124,12 @@ angular.module('cartForm', ['ui.router', 'ngResource', 'account', 'orderForm'])
             order.summ = $scope.total();
 
             orderService.addOrder($stateParams.name, $scope.items, order).success(function (data) {
-                alert("Ваш заказ успешно обработан, в ближайшее время с вами свяжутся...")
+                alert("Ваш заказ успешно обработан, в ближайшее время с вами свяжутся...");
                 $state.go("manageOrder", {name: $scope.account.username});
             }).error(function (data, status) {
                 console.log("error " + status + " " + data);
 
             });
-
-
         };
         // модель заявки
 

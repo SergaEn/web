@@ -55,7 +55,7 @@ angular.module('orderForm', ['ui.router', 'ngResource'])
             }).success(function (success) {
 
             }).error(function (data, status) {
-                alert("bad " + data);
+                alert("Что то пошло не так при отправке письма...");
             });
         };
 

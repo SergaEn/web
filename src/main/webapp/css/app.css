@@ -139,7 +139,6 @@ label.col-sm-4.control-label {
 
 .order-form input {
     max-width: 300px;
-    text-align: center;
 }
 
 .order-form textarea {
@@ -302,7 +301,6 @@ label.col-sm-4.control-label {
 
 .basket label {
     max-width: 50%;
-    text-align: center;
     margin-top: 30%;
     margin-left: 25%;
 }
