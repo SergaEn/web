@@ -14,7 +14,7 @@ public class ApplicationMailer {
     private MailSender mailSender;
 
 
-    public void sendMail(String to, String subject, String body) {
+    public void sendMail(final String to, final String subject, final String body) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
         message.setSubject(subject);

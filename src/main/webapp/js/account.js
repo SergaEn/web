@@ -29,6 +29,7 @@ angular.module('account', ['ui.router', 'ngResource'])
             var Account = $resource("/api/accounts/:paramAccountId");
             return Account.get({paramAccountId: accountId});
         };
+
         service.getAllAccounts = function () {
             var Account = $resource("/api/accounts");
             return Account.query();

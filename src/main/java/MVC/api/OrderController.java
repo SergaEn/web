@@ -5,9 +5,7 @@ import MVC.persistence.entities.Order;
 import MVC.persistence.entities.Phone;
 import MVC.persistence.repositories.AccountRepository;
 import MVC.persistence.repositories.OrderRepository;
-import MVC.service.ApplicationMailer;
 import MVC.service.JmsMessageSender;
-import MVC.util.AppearanceLetters;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -40,12 +38,6 @@ public class OrderController {
 
     @Autowired
     OrderRepository orderRepository;
-
-    @Autowired
-    ApplicationMailer applicationMailer;
-
-    @Autowired
-    AppearanceLetters appearanceLetters;
 
     @Autowired
     JmsMessageSender jmsMessageSender;

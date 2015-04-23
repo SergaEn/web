@@ -1,10 +1,8 @@
 package MVC.persistence.entities;
 
-import org.hibernate.annotations.*;
-import org.hibernate.annotations.CascadeType;
-
-import javax.persistence.*;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.List;
 
@@ -13,9 +11,11 @@ import java.util.List;
  */
 @Entity
 @Table(name = "cart")
-public class Cart extends MappedModel {
-    public Cart(){}
-    public Cart(List<Phone> phones, Account account){
+public class Basket extends MappedModel {
+    public Basket() {
+    }
+
+    public Basket(List<Phone> phones, Account account) {
         this.account = account;
         this.phones = phones;
     }

@@ -1,4 +1,4 @@
-angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap', 'cartForm'])
+angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap', 'BasketForm'])
 
     .config(function config($stateProvider) {
         $stateProvider.state('phones', {
@@ -49,7 +49,7 @@ angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap', 'cartForm']
 
         return service;
     })
-    .controller('PhoneListCtrl', function ($scope, $modal, phones, phoneService, cartService) {
+    .controller('PhoneListCtrl', function ($scope, $modal, phones, phoneService, basketService) {
         $scope.phones = phones;
 
         $scope.openNewBuyDlg = function (phone) {
@@ -77,7 +77,7 @@ angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap', 'cartForm']
 
         $scope.flagVisible = false;
         $scope.toCart = function (data) {
-            cartService.toCart(data);
+            basketService.toCart(data);
         };
 
 

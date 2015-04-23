@@ -30,7 +30,7 @@ public class JmsMessageSender {
         });
     }
 
-    public void send(String dest, final Object object) {
+    public void send(final String dest, final Object object) {
 
         this.jmsTemplate.send(dest, new MessageCreator() {
             @Override

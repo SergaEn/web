@@ -62,7 +62,8 @@
                             <a class="btn btn-large btn-default panel-user" ng-show="isLoggedIn()" ng-click="addVisa()" data-toggle="tooltip"
                                title="Добавить карту оплаты"><span class="glyphicon glyphicon-credit-card"></span> Visa</a>
 
-                            <a class="btn btn-large  btn-success panel-user" data-ng-disabled="!isLoggedIn()" ui-sref="manageCart({name:username})">
+                            <a class="btn btn-large  btn-success panel-user" data-ng-disabled="!isLoggedIn()"
+                               ui-sref="manageBasket({name:username})">
                                 <span class="glyphicon glyphicon-shopping-cart " data-toggle="tooltip" title="Корзина"></span></a>
 
                             <a ng-click="logout()" ng-show="isLoggedIn()" class="btn btn-large  btn-danger " data-toggle="tooltip" title="Выход"><span

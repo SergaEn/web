@@ -2,7 +2,7 @@ angular.module('RootApp', [
     'ui.router',
     'account',
     'phones',
-    'cartForm',
+    'BasketForm',
     'phoneAnimations',
     'ui.bootstrap',
     'orderForm'

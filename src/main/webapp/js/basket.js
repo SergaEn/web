@@ -1,8 +1,8 @@
-angular.module('cartForm', ['ui.router', 'ngResource', 'account', 'orderForm'])
+angular.module('BasketForm', ['ui.router', 'ngResource', 'account', 'orderForm'])
 
     .config(function config($stateProvider) {
-        $stateProvider.state('manageCart', {
-                url: '/cart?name',
+        $stateProvider.state('manageBasket', {
+            url: '/basket?name',
                 views: {
                     'main': {
                         templateUrl: 'partials/basket.html',
@@ -13,7 +13,7 @@ angular.module('cartForm', ['ui.router', 'ngResource', 'account', 'orderForm'])
             });
     })
 
-    .factory('cartService', function ($resource, $http) {
+    .factory('basketService', function ($resource, $http) {
         var service = {};
         service.items = [];
 
@@ -39,35 +39,32 @@ angular.module('cartForm', ['ui.router', 'ngResource', 'account', 'orderForm'])
 
         };
 
-        service.getAllPhonesToCart = function (data) {
-            var arr = data.split(',');
-            return $http.post("/api/cart", arr).success(function (success) {
+        service.getAllPhonesToBasket = function (name, data) {
+            return $http({
+                url: "/api/basket",
+                method: "POST",
+                params: {name: name},
+                data: data
+            })
+                .success(function (success) {
             }).error(function (data, status) {
-                alert("bad " + data);
+                    alert("Что то пошло не так...");
             });
         };
-
-
-
-
         return service;
     })
 
 
-    .controller('CartCtrl', function ($scope, cartService, accountService, $state, $stateParams, orderService) {
-        var phone = cartService.getAllPhonesToLocal();
+    .controller('CartCtrl', function ($scope, basketService, accountService, $state, $stateParams, orderService) {
+        var phone = basketService.getAllPhonesToLocal();
         accountService.getAuthorizedAccount().success(function (account) {
             $scope.account = account;
-            console.log("Cart " + $scope.account.username);
         });
-
-
             if (phone) {
-                cartService.getAllPhonesToCart(phone)
+                basketService.getAllPhonesToBasket($stateParams.name, phone.split(','))
                     .success(function (data) {
                         angular.forEach(data, function (item) {
                             item.count = 1;
-
                         })
                         $scope.items = data;
                     });
@@ -81,14 +78,12 @@ angular.module('cartForm', ['ui.router', 'ngResource', 'account', 'orderForm'])
             $scope.mainImageUrl = imageUrl;
         };
 
-        // -1 товар
         $scope.minus = function (index) {
             if ($scope.items[index].count > 0) {
                 $scope.cartform.$setDirty();
                 $scope.items[index].count--;
             }
         };
-        // +1 товар
 
         $scope.plus = function (index) {
             $scope.cartform.$setDirty();
@@ -98,13 +93,12 @@ angular.module('cartForm', ['ui.router', 'ngResource', 'account', 'orderForm'])
         $scope.removeItem = function (item) {
             var index = $scope.items.indexOf(item);
             $scope.items.splice(index, 1);
-            cartService.removeItem();
+            basketService.removeItem();
             angular.forEach($scope.items, function (item) {
-                cartService.toCart(item.id);
+                basketService.toCart(item.id);
             });
 
         };
-        // подсчет итоговой суммы
 
         $scope.total = function () {
             var total = 0;
@@ -113,7 +107,6 @@ angular.module('cartForm', ['ui.router', 'ngResource', 'account', 'orderForm'])
             });
             return total;
         };
-        // проверка корзины на пустоту
 
         $scope.has_items = function () {
             return $scope.items != null;
@@ -131,7 +124,6 @@ angular.module('cartForm', ['ui.router', 'ngResource', 'account', 'orderForm'])
 
             });
         };
-        // модель заявки
 
         $scope.order = {
             name:'',
@@ -141,6 +133,4 @@ angular.module('cartForm', ['ui.router', 'ngResource', 'account', 'orderForm'])
             comments: '',
             orderDate: new Date()
         };
-
-
     });
