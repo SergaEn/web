@@ -4,6 +4,7 @@ import MVC.persistence.entities.Phone;
 import MVC.persistence.entities.Visa;
 import MVC.persistence.repositories.PhoneRepository;
 import MVC.persistence.repositories.VisaRepository;
+import MVC.services.exceptions.VisaDoesNotExistException;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,14 +41,12 @@ public class VisaController {
             throw new IllegalArgumentException("Invalid arguments.");
         }
 
-
-
         log.info(buyVisa.toString());
         ResponseEntity<Phone> rv;
         Visa visa = visaRepository.findVisaCartNumber(buyVisa.getCartNumber());
         log.info(visa);
         if (visa == null)
-            return new ResponseEntity<Phone>(HttpStatus.CONFLICT);
+            throw new VisaDoesNotExistException();
         if (visa.getSumm() < buyVisa.getSumm()) {
             return new ResponseEntity<Phone>(HttpStatus.UNPROCESSABLE_ENTITY);
         }
@@ -94,7 +93,7 @@ public class VisaController {
         Visa visa = visaRepository.findVisaCartNumber(buyVisa.getCartNumber());
         log.info(visa);
         if (visa != null)
-            return new ResponseEntity<Visa>(HttpStatus.CONFLICT);
+            throw new VisaDoesNotExistException();
         if (buyVisa.getCvv() == null || buyVisa.getCartNumber() == null || buyVisa.getExpirationDate() == null || buyVisa.getCartName() == null
                 || buyVisa.getFirstName() == null || buyVisa.getLastName() == null) {
             return new ResponseEntity<Visa>(HttpStatus.UNPROCESSABLE_ENTITY);

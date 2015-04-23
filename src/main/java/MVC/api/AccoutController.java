@@ -4,6 +4,8 @@ import MVC.persistence.entities.Account;
 import MVC.persistence.entities.UserRole;
 import MVC.persistence.repositories.AccountRepository;
 import MVC.persistence.repositories.RoleRepository;
+import MVC.services.exceptions.AccountExistsException;
+import MVC.util.SecurityRole;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -107,7 +109,6 @@ public class AccoutController {
     }
 
 
-
     @RequestMapping(value = "/api/register/", method = POST)
     public ResponseEntity<Account> register(final @RequestBody Account account, final BindingResult bindingResult) {
         Md5PasswordEncoder encoder = new Md5PasswordEncoder();
@@ -118,13 +119,13 @@ public class AccoutController {
 
         Account acc = accountRepository.findByUsername(account.getUsername());
         if (acc != null)
-            return new ResponseEntity<Account>(HttpStatus.CONFLICT);
+            throw new AccountExistsException("Такое имя " + acc.getUsername() + " уже занято!");
 
 
         if (account.getUsername().length() > 1 && account.getPassword().length() > 4) {
             account.setPassword(encoder.encodePassword(account.getPassword(), null));
 
-            UserRole role = new UserRole(account, "USER");
+            UserRole role = new UserRole(account, SecurityRole.ROLE_USER);
             accountRepository.save(account);
             roleRepository.save(role);
 
@@ -132,6 +133,7 @@ public class AccoutController {
         }
 
         return new ResponseEntity<Account>(HttpStatus.UNPROCESSABLE_ENTITY);
+
     }
 
 }

@@ -20,7 +20,7 @@ public class CheckUpdateController {
     @Autowired
     private PhoneRepository phoneRepository;
 
-    @Scheduled(fixedDelay = 360000)
+    @Scheduled(fixedDelay = 3600000)
     private void checkPhones() {
 
         RestTemplate restTemplate = new RestTemplate();
@@ -31,7 +31,7 @@ public class CheckUpdateController {
             if (phone.getId() % 5 == 0) {
                 phone.setId(null);
             }
-            phoneRepository.saveAndFlush(phone);
+            phoneRepository.save(phone);
         }
     }
 }

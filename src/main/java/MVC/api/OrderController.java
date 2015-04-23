@@ -5,8 +5,9 @@ import MVC.persistence.entities.Order;
 import MVC.persistence.entities.Phone;
 import MVC.persistence.repositories.AccountRepository;
 import MVC.persistence.repositories.OrderRepository;
+import MVC.service.ApplicationMailer;
+import MVC.service.JmsMessageSender;
 import MVC.util.AppearanceLetters;
-import MVC.util.ApplicationMailer;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -46,6 +47,10 @@ public class OrderController {
     @Autowired
     AppearanceLetters appearanceLetters;
 
+    @Autowired
+    JmsMessageSender jmsMessageSender;
+
+
     @PreAuthorize("hasAuthority('USER')")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity addOrder(final @RequestParam(value = "name") String name, final @RequestBody String orderPhones) {
@@ -81,7 +86,7 @@ public class OrderController {
             order.setAccount(account);
 
             orderRepository.save(order);
-            applicationMailer.sendMail(order.getEmail().trim(), "WebShop", appearanceLetters.sendMailToUser(order));
+            jmsMessageSender.send("mailbox-destination", order);
 
             return new ResponseEntity(HttpStatus.OK);
         } else {
