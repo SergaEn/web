@@ -10,7 +10,7 @@ import java.util.List;
  * Created by VarArg on 19.04.2015.
  */
 @Entity
-@Table(name = "cart")
+@Table(name = "basket")
 public class Basket extends MappedModel {
     public Basket() {
     }

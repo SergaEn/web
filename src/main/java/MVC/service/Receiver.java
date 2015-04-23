@@ -1,6 +1,7 @@
 package MVC.service;
 
 import MVC.persistence.entities.Order;
+import MVC.persistence.repositories.OrderRepository;
 import MVC.util.AppearanceLetters;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class Receiver {
     @Autowired
     AppearanceLetters appearanceLetters;
 
+    @Autowired
+    OrderRepository orderRepository;
+
     @JmsListener(destination = "mailbox-destination", containerFactory = "myJmsContainerFactory")
     public void receiveMessage(final Order order) {
         log.info("Received <" + order.toString() + ">");
@@ -29,5 +33,12 @@ public class Receiver {
         } catch (Exception e) {
             log.warn(e);
         }
+    }
+
+    @JmsListener(destination = "save-order", containerFactory = "myJmsContainerFactory")
+    public void saveOrder(final Order order) {
+        log.info("Received <" + order.toString() + ">");
+        orderRepository.save(order);
+
     }
 }

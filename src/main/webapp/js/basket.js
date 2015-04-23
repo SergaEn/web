@@ -120,7 +120,7 @@ angular.module('BasketForm', ['ui.router', 'ngResource', 'account', 'orderForm']
                 alert("Ваш заказ успешно обработан, в ближайшее время с вами свяжутся...");
                 $state.go("manageOrder", {name: $scope.account.username});
             }).error(function (data, status) {
-                console.log("error " + status + " " + data);
+                console.log("error " + status);
 
             });
         };

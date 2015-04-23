@@ -4,19 +4,11 @@ import MVC.persistence.entities.Phone;
 import MVC.persistence.repositories.PhoneRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * Created by varArg on 31.03.2015.
@@ -29,16 +21,14 @@ public class PhoneController {
     private PhoneRepository phoneRepository;
 
 
-    @RequestMapping(value = "/{id:\\d+}", method = GET)
-   /* @PreAuthorize("isAuthenticated()")*/
+    @RequestMapping(value = "/{id:\\d+}")
     Phone getPhones(final @PathVariable Integer id) {
         final Phone phone = phoneRepository.findOne(id);
         log.info(phone.toString());
         return phone;
     }
 
-    @RequestMapping(method = GET)
-    /*@PreAuthorize("isAuthenticated()")*/
+    @RequestMapping()
     List<Phone> getPhones() {
         List<Phone> phone = phoneRepository.findAll();
         return phone;

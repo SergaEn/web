@@ -77,8 +77,9 @@ public class OrderController {
             order.setPhoneList(list);
             order.setAccount(account);
 
-            orderRepository.save(order);
+            jmsMessageSender.send("save-order", order);
             jmsMessageSender.send("mailbox-destination", order);
+
 
             return new ResponseEntity(HttpStatus.OK);
         } else {
