@@ -48,7 +48,6 @@ angular.module('BasketForm', ['ui.router', 'ngResource', 'account', 'orderForm']
             })
                 .success(function (success) {
             }).error(function (data, status) {
-                    alert("Что то пошло не так...");
             });
         };
         return service;
@@ -117,10 +116,9 @@ angular.module('BasketForm', ['ui.router', 'ngResource', 'account', 'orderForm']
             order.summ = $scope.total();
 
             orderService.addOrder($stateParams.name, $scope.items, order).success(function (data) {
-                alert("Ваш заказ успешно обработан, в ближайшее время с вами свяжутся...");
+                alert("На ваш адресс отправлено письмо.");
                 $state.go("manageOrder", {name: $scope.account.username});
             }).error(function (data, status) {
-                console.log("error " + status);
 
             });
         };

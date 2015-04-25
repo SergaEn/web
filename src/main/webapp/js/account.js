@@ -59,7 +59,7 @@ angular.module('account', ['ui.router', 'ngResource'])
             modalInstance.result.then(
                 function (account) {
                     $scope.username = account.username;
-$state.go("phones");
+                    $state.go("phones");
                 },
                 function () {
                 }
@@ -74,7 +74,7 @@ $state.go("phones");
             });
         };
         $scope.register = function () {
-                var modalInstance = $modal.open({
+            var modalInstance = $modal.open({
                 templateUrl: '/partials/register.html',
                 controller: 'RegisterCtrl',
                 scope: $scope
