@@ -1,4 +1,4 @@
-angular.module('account', ['ui.router', 'ngResource'])
+angular.module('account', ['ui.router', 'ngResource', 'ngCookies'])
 
     .factory('sessionService', function ($http, $state) {
         var session = {};
@@ -7,14 +7,18 @@ angular.module('account', ['ui.router', 'ngResource'])
             "&password=" + data.password, {
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).success(function (success) {
-                localStorage.setItem("session", {});
+                return localStorage.setItem("session",{});
                 alert("Регистрация успешно завершина! \n Добро пожаловать - " + data.username);
             }).error(function (data, status) {
 
             });
         };
+
         session.logout = function () {
-            localStorage.removeItem("session");
+            return $http.get("/logout").success(function (success){
+               localStorage.removeItem("session");
+            });
+
         };
         session.isLoggedIn = function () {
             return localStorage.getItem("session") !== null;

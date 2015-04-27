@@ -17,7 +17,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -133,7 +132,5 @@ public class AccoutController {
         }
 
         return new ResponseEntity<Account>(HttpStatus.UNPROCESSABLE_ENTITY);
-
     }
-
 }

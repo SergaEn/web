@@ -1,9 +1,6 @@
 package MVC.config;
 
-import MVC.security.AuthFailure;
-import MVC.security.AuthSuccess;
-import MVC.security.EntryPointUnauthorizedHandler;
-import MVC.security.UserDetailServiceImpl;
+import MVC.security.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
@@ -32,6 +29,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private AuthSuccess authSuccess;
 
     @Autowired
+    private AuthLogout authLogout;
+
+    @Autowired
     private EntryPointUnauthorizedHandler unauthorizedHandler;
 
 
@@ -58,6 +58,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .successHandler(authSuccess)
                 .failureHandler(authFailure)
+                .and()
+                .logout().logoutUrl("/logout").deleteCookies("JSESSIONID").logoutSuccessUrl("/").invalidateHttpSession(true)
                 .and()
                 .authorizeRequests()
                 .antMatchers("/**")

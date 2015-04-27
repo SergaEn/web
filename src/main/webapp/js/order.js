@@ -55,6 +55,9 @@ angular.module('orderForm', ['ui.router', 'ngResource'])
             }).success(function (success) {
 
             }).error(function (data, status) {
+                if (status===401){
+                    alert("Необходимо авторизоваться!")
+                }
             });
         };
 
