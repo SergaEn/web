@@ -82,6 +82,10 @@ ul.phone-thumbs img:hover {
     cursor: pointer;
 }
 
+li {
+    cursor: pointer;
+}
+
 ul.specs {
     clear: both;
     margin: 0;

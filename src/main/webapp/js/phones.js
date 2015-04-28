@@ -1,23 +1,24 @@
 angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap', 'BasketForm'])
 
     .config(function config($stateProvider) {
-        $stateProvider.state('phones', {
-            url: '/phones',
-            views: {
-                'main': {
-                    templateUrl: 'partials/phone-list.html',
-                    controller: 'PhoneListCtrl'
-                }
-            },
-            resolve: {
-                phones: function (phoneService) {
-                    return phoneService.getAllPhones();
-                }
-            },
-            data: {pageTitle: 'Home'}
-        })
+        $stateProvider
+            .state('phones', {
+                url: '/phones',
+                views: {
+                    'main': {
+                        templateUrl: 'partials/phone-list.html',
+                        controller: 'PhoneListCtrl'
+                    }
+                }/*,
+                 resolve: {
+                 content: function (phoneService) {
+                 return phoneService.getPhones();
+                 }
+                 }*/,
+                data: {pageTitle: 'Home'}
+            })
             .state('phone', {
-                url: '/phones/:phoneId',
+                url: '/phone/:phoneId',
                 views: {
                     'main': {
                         templateUrl: 'partials/phone-detail.html',
@@ -33,24 +34,61 @@ angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap', 'BasketForm
             });
     })
 
-    .factory('phoneService', function ($resource) {
+    .factory('phoneService', function ($resource, $http) {
         var service = {};
 
-        service.getAllPhones = function () {
-            var Phones = $resource("/api/phones");
-            return Phones.query();
+        service.getAllPhones = function (pageNumber) {
+            var Phones = $resource("/api/phones/:pageNumber");
+            return Phones.get({pageNumber: pageNumber}).success(function (data) {
+            });
+
+        };
+        service.getPhones = function () {
+            return $http.get("/api").success(function (success) {
+            }).error(function (data, status) {
+            });
 
         };
 
         service.getPhoneById = function (phoneId) {
-            var Phone = $resource("/api/phones/:phoneId");
+            var Phone = $resource("/api/phone/:phoneId");
             return Phone.get({phoneId: phoneId});
         };
 
         return service;
     })
-    .controller('PhoneListCtrl', function ($scope, $modal, phones, phoneService, basketService) {
-        $scope.phones = phones;
+    .controller('PhoneListCtrl', function ($scope, $modal, phoneService, basketService, $http) {
+
+        phoneService.getPhones().success(function (data) {
+            $scope.phones = data.content;
+            $scope.phones = data.content;
+            $scope.totalPages = data.totalPages;
+            $scope.currentPage = data.number + 1;
+            $scope.totalRecords = data.totalElements;
+
+            var pages = [];
+            for (var i = 1; i <= data.totalPages; i++) {
+                pages.push(i);
+            }
+            $scope.range = pages;
+
+        });
+
+        $scope.getAllRecords = function (pageNumber) {
+            $http.get("/api/phones/" + pageNumber).success(function (data) {
+                $scope.phones = data.content;
+                $scope.totalPages = data.totalPages;
+                $scope.currentPage = data.number + 1;
+                $scope.totalRecords = data.totalElements;
+
+                var pages = [];
+                for (var i = 1; i <= data.totalPages; i++) {
+                    pages.push(i);
+                }
+                $scope.range = pages;
+            });
+        };
+
 
         $scope.openNewBuyDlg = function (phone) {
             var modalInstance = $modal.open({
