@@ -24,7 +24,7 @@ public class RamCacheImp<K extends Serializable, V extends Serializable> impleme
     }
 
     @Override
-    public synchronized V getObject(final K key) throws DoesNotExistException {
+    public V getObject(final K key) throws DoesNotExistException {
         if (hashMap.containsKey(key)) {
             frequency = frequencyMap.get(key);
             frequencyMap.put(key, ++frequency);

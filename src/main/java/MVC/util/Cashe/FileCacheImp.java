@@ -40,7 +40,7 @@ public class FileCacheImp<K extends Serializable, V extends Serializable> implem
     }
 
     @Override
-    public synchronized V getObject(final K key) throws DoesNotExistException {
+    public V getObject(final K key) throws DoesNotExistException {
         if (hashMap.containsKey(key)) {
             String pathToObject = hashMap.get(key);
             try (ObjectInputStream objectStream = new ObjectInputStream(new FileInputStream(pathToObject))) {

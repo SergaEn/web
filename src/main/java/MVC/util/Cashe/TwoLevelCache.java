@@ -1,6 +1,7 @@
 package MVC.util.Cashe;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
@@ -23,7 +24,7 @@ public class TwoLevelCache<K extends Serializable, V extends Serializable> imple
 
 
     @Override
-    public void recache() {
+    public synchronized void recache() {
         ConcurrentSkipListSet<K> ramCache = new ConcurrentSkipListSet<K>(memoryCache.getFrequencySetKey());
         int boundFrecquency = 0;
         for (K key : ramCache) {
@@ -44,8 +45,9 @@ public class TwoLevelCache<K extends Serializable, V extends Serializable> imple
             if (fileCashe.getFrequencyCallObjectByKey(key) > boundFrecquency) {
                 memoryCache.cashe(key, fileCashe.getObject(key));
                 fileCashe.deleteObject(key);
-            }
 
+
+            }
         }
     }
 
@@ -59,19 +61,21 @@ public class TwoLevelCache<K extends Serializable, V extends Serializable> imple
         if (memoryCache.containsKey(key)) {
             numberOfRequests = numberOfRequests + 1;
             if (numberOfRequests > numberOfRequestsForRecahce) {
+                Object o = memoryCache.getObject(key);
                 this.recache();
                 numberOfRequests = 0;
+                return (V) o;
             }
 
-            System.out.println("Из памяти : " + memoryCache.getObject(key));
             return memoryCache.getObject(key);
         } else if (fileCashe.containsKey(key)) {
             numberOfRequests = numberOfRequests + 1;
             if (numberOfRequests > numberOfRequestsForRecahce) {
+                Object o = fileCashe.getObject(key);
                 this.recache();
                 numberOfRequests = 0;
+                return (V) o;
             }
-            System.out.println("Из файла : " + fileCashe.getObject(key));
             return fileCashe.getObject(key);
         }
         throw new DoesNotExistException();

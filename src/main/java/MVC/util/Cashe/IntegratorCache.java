@@ -7,7 +7,6 @@ import java.util.Set;
  */
 public interface IntegratorCache<K, V> {
     FileCache<K, V> getFileCache();
-
     RamCache<K, V> getRamCache();
 
 }
