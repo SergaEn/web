@@ -1,4 +1,4 @@
-angular.module('BasketForm', ['ui.router', 'ngResource', 'account', 'orderForm'])
+angular.module('basketForm', ['ui.router', 'ngResource', 'account', 'orderForm'])
 
     .config(function config($stateProvider) {
         $stateProvider.state('manageBasket', {

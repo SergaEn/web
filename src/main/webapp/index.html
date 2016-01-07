@@ -49,7 +49,8 @@
             <div class="col-sm-4">
                 <ul class="nav navbar-nav navbar-right" ng-controller="LoginCtrl">
                     <form class="navbar-form navbar-left">
-                        <a class="btn btn-large  btn-info " data-ng-disabled="!isLoggedIn()" ui-sref="manageOrder({name:username})">Заказы</a>
+                        <a class="btn btn-large  btn-info " data-ng-disabled="!isLoggedIn()"
+                           ui-sref="manageOrder({name:username})">Заказы</a>
 
                         <div class="btn-group" ng-hide="isLoggedIn()">
                             <a ng-click="login()" class="btn btn-large  btn-success" data-toggle="tooltip" title="Вход"><span
@@ -59,14 +60,17 @@
                         <div class="btn-group">
 
 
-                            <a class="btn btn-large btn-default panel-user" ng-show="isLoggedIn()" ng-click="addVisa()" data-toggle="tooltip"
+                            <a class="btn btn-large btn-default panel-user" ng-show="isLoggedIn()" ng-click="addVisa()"
+                               data-toggle="tooltip"
                                title="Добавить карту оплаты"><span class="glyphicon glyphicon-credit-card"></span> Visa</a>
 
                             <a class="btn btn-large  btn-success panel-user" data-ng-disabled="!isLoggedIn()"
                                ui-sref="manageBasket({name:username})">
-                                <span class="glyphicon glyphicon-shopping-cart " data-toggle="tooltip" title="Корзина"></span></a>
+                                <span class="glyphicon glyphicon-shopping-cart " data-toggle="tooltip"
+                                      title="Корзина"></span></a>
 
-                            <a ng-click="logout()" ng-show="isLoggedIn()" class="btn btn-large  btn-danger " data-toggle="tooltip" title="Выход"><span
+                            <a ng-click="logout()" ng-show="isLoggedIn()" class="btn btn-large  btn-danger "
+                               data-toggle="tooltip" title="Выход"><span
                                     class="glyphicon glyphicon-off"></span>
                                 <span ng-bind="username"></span><span class="glyphicon glyphicon-user"></span></a>
                         </div>

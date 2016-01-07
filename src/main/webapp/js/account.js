@@ -1,4 +1,4 @@
-angular.module('account', ['ui.router', 'ngResource', 'ngCookies'])
+angular.module('account', ['ui.router', 'ngResource'])
 
     .factory('sessionService', function ($http, $state) {
         var session = {};

@@ -1,4 +1,4 @@
-angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap', 'BasketForm'])
+angular.module('phones', ['ui.router', 'ngResource', 'ui.bootstrap', 'basketForm'])
 
     .config(function config($stateProvider) {
         $stateProvider
